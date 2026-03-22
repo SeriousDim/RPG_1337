@@ -49,5 +49,3 @@ PICKAXES = [
     Instrument(2, "Железная кирка"),
     Instrument(3, "Кирка с лазуритом")
 ]
-
-
