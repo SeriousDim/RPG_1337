@@ -4,5 +4,5 @@ from model.items.item import Item
 
 @dataclass
 class Instrument(Item):
-    name: str
+    pass
 
