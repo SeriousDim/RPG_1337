@@ -5,12 +5,12 @@ from model.items.armor import Armor
 
 @dataclass
 class PlayerArmor:
-    current_armor_absorbed_damage: int
-    max_possible_armor_absorbed_damage: int
-    helmet: Armor
-    chestplate: Armor
-    leggings: Armor
-    shield: Armor
+    current_armor_absorbed_damage: int = 0
+    max_possible_armor_absorbed_damage: int = 0
+    helmet: Armor = None
+    chestplate: Armor = None
+    leggings: Armor = None
+    shield: Armor = None
     
     def set_helmet(self, helmet: Armor):
         self.helmet = helmet

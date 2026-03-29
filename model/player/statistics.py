@@ -3,7 +3,7 @@ from dataclasses import dataclass
 
 @dataclass
 class Statistics:
-    enemies_killed: int
-    quests_passes: int
-    damage_received: int
-    money_earned: int
+    enemies_killed: int = 0
+    quests_passes: int = 0
+    damage_received: int = 0
+    money_earned: int = 0
