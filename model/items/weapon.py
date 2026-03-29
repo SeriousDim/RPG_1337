@@ -5,4 +5,5 @@ from model.items.instrument import Instrument
 
 @dataclass
 class Weapon(Instrument):
-    pass
+    def __post_init__(self):
+        self.type = "оружие"

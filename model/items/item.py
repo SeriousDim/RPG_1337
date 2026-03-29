@@ -6,3 +6,4 @@ from dataclasses import dataclass
 class Item(ABC):
     rank: int
     name: str
+    type: str

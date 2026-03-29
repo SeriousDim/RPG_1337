@@ -39,13 +39,21 @@ ORES = [
 ]
 
 SHOVELS = [
-    Instrument(1, "Деревянная лопата"),
-    Instrument(2, "Железная лопата"),
-    Instrument(3, "Лопата с лазуритом")
+    Instrument(1, "Деревянная лопата", "лопата"),
+    Instrument(2, "Железная лопата", "лопата"),
+    Instrument(3, "Лопата с лазуритом", "лопата")
 ]
 
 PICKAXES = [
-    Instrument(1, "Деревянная кирка"),
-    Instrument(2, "Железная кирка"),
-    Instrument(3, "Кирка с лазуритом")
+    Instrument(1, "Деревянная кирка", "кирка"),
+    Instrument(2, "Железная кирка", "кирка"),
+    Instrument(3, "Кирка с лазуритом", "кирка")
 ]
+
+MAX_RANKS = {
+    'оружие': len(SWORDS),
+    'трава': len(HERBS),
+    'руда': len(ORES),
+    'лопата': len(SHOVELS),
+    'кирка': len(PICKAXES)
+}

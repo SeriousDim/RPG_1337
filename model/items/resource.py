@@ -1,4 +1,4 @@
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from enum import Enum
 
 from model.items.item import Item
@@ -6,12 +6,18 @@ from model.items.item import Item
 
 @dataclass
 class ResourceType(Enum):
-    HERB = 1
-    ORE = 2
+    HERB = "трава"
+    ORE = "руда"
 
 
 @dataclass
 class Resource(Item):
+    type: str = field(init=False)
     name: str
-    type: ResourceType
+    resource_type: ResourceType
     min_instrument_rank: int
+    
+    def __post_init__(self):
+        self.type = self.resource_type.name
+    
+    
