@@ -31,3 +31,6 @@ SHIELDS = [
     Armor(5, "Щит с изумрудом", 9),
     Armor(6, "Щит с бриллиантом", 10)
 ]
+
+def get_armors() -> list[Armor]:
+    return HELMETS + CHEST_PLATES + LEGGINGS + SHIELDS

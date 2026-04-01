@@ -11,4 +11,5 @@ class PrimaryLocation:
 @dataclass
 class BufferedLocation:
     name: str
-    resource: Resource
+    herb_resource: Resource
+    ore_resource: Resource

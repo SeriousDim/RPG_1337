@@ -1,5 +1,5 @@
 from model.objects.player import INITIAL_HEALTH, INITIAL_MONEY
-from model.player.health import Health
+from model.common.health import Health
 from model.player.player import Player
 from model.player.player_armor import PlayerArmor
 from model.player.player_level import PlayerLevel
@@ -38,4 +38,7 @@ class PlayerGenerator:
             armor=armor,
         )
         
+    @staticmethod
+    def create_random_player(level: int) -> Player:
+        raise NotImplementedError()
     

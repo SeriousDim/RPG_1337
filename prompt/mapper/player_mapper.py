@@ -5,6 +5,7 @@ from prompt.model.player_armor_dto import PlayerArmorDto
 
 
 class PlayerPromptMapper:
+    
     @staticmethod
     def to(player: Player) -> PromptPlayer:
         return PromptPlayer(

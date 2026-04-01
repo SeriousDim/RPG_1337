@@ -57,3 +57,11 @@ MAX_RANKS = {
     'лопата': len(SHOVELS),
     'кирка': len(PICKAXES)
 }
+
+
+def get_instruments() -> list[Instrument]:
+    return SHOVELS + PICKAXES
+
+
+def get_resources() -> list[Resource]:
+    return HERBS + ORES
