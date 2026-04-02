@@ -1,5 +1,5 @@
 from model.common.health import Health
-from model.enemies.enemy import Enemy
+from model.mobs.enemy import Enemy
 
 
 ENEMIES = [

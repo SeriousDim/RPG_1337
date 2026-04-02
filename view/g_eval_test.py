@@ -6,8 +6,8 @@ from deepeval.metrics import AnswerRelevancyMetric
 from deepeval.test_case import LLMTestCase
 import pandas as pd
 
-from llm_adapters.gemini import GeminiViaHttpLLM
-from llm_adapters.open_ai_competible_chat_llm import OpenAICompatibleChatLLM
+from llm.deepeval.gemini import GeminiViaHttpLLM
+from llm.deepeval.open_ai_competible_chat_llm import OpenAICompatibleChatLLM
 
 from dotenv import load_dotenv
 load_dotenv()

@@ -4,6 +4,7 @@ from model.game.state.game_state import GameState
 
 class QuestContextGenerator:
     
+    @staticmethod
     def generate(keys: list[str], state: GameState, quest_type: str) -> dict:
         handlers = {
             PLAYER_KEY: handle_player_key(state),

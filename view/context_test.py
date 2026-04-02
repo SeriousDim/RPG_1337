@@ -1,4 +1,4 @@
-from generation.player_generator import PlayerGenerator
+from generation.objects.player_generator import PlayerGenerator
 from prompt.mapper.player_mapper import PlayerPromptMapper
 
 import yaml

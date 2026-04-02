@@ -1,7 +1,5 @@
-from model.game import game_context
 from model.game.context.game_objects import GameObjects
 from model.game.context.items import Items
-from model.mobs.character import Character
 from model.objects.armors import get_armors
 from model.objects.enemies import ENEMIES
 from model.objects.locations import get_locations
@@ -22,6 +20,6 @@ class GameObjectsGenerator:
             ),
             enemies=ENEMIES,
             locations=get_locations(),
-            characters=[]
+            already_generated_characters=[]
         )
         

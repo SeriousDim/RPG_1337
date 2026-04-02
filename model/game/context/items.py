@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 
-from model.game.armors import Armors
-from model.game.resources import Resources
+from model.game.context.armors import Armors
+from model.game.context.resources import Resources
 from model.items.instrument import Instrument
 from model.items.weapon import Weapon
 

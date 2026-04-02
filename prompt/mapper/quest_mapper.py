@@ -16,4 +16,4 @@ class QuestTypeMapper:
     
     @staticmethod
     def handle_quest_format_key(quest_type: str) -> str:
-        return ResourceLoader.load_text(quest_type + ".yaml")
+        return ResourceLoader.load_text(f"{QuestTypeMapper.QUEST_YAMLS_PATH}/{quest_type}.yaml")
