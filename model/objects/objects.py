@@ -1,3 +1,4 @@
+from model.game.context.resources import Resources
 from model.items.instrument import Instrument
 from model.items.resource import Resource, ResourceType
 from model.items.sword import Sword
@@ -63,5 +64,8 @@ def get_instruments() -> list[Instrument]:
     return SHOVELS + PICKAXES
 
 
-def get_resources() -> list[Resource]:
-    return HERBS + ORES
+def get_resources() -> Resources:
+    return Resources(
+        herbs=HERBS,
+        ores=ORES
+    )

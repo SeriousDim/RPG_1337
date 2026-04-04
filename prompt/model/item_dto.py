@@ -12,8 +12,11 @@ class ItemDto(Item):
     rank: RankDto = field(init=False)
     extra: dict[str, Any] = field(default_factory=dict)
     
-    def __init__(self, item: Item):
+    def __init__(self, item: Item, exclude_fields=[]):
         all_data = {f.name: to_yaml_primitive(getattr(item, f.name)) for f in fields(item)}
+
+        for field in exclude_fields:
+            del all_data[field]
 
         self.name = all_data.pop("name")
         self.type = all_data.pop("type")

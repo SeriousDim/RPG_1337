@@ -13,6 +13,3 @@ class GameObjects:
     enemies: list[Enemy]
     locations: Locations
     already_generated_characters: list[Character]
-    
-    def __dict__(self):
-        return asdict(self)

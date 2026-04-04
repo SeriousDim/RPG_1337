@@ -18,6 +18,13 @@ class Resource(Item):
     min_instrument_rank: int
     
     def __post_init__(self):
-        self.type = self.resource_type.name
+        self.type = self.resource_type.value
     
+    def __dict__(self):
+        return {
+            "name": self.name,
+            "type": self.type,
+            "rank": self.rank,
+            "min_instrument_rank": self.min_instrument_rank
+        }
     

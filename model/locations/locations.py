@@ -6,6 +6,11 @@ from model.items.resource import Resource
 @dataclass
 class PrimaryLocation:
     name: str
+    
+    def __dict__(self):
+        return {
+            "name": self.name,
+        }
 
 
 @dataclass

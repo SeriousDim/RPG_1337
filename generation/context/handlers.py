@@ -1,21 +1,15 @@
 from functools import wraps
 from typing import Any, Callable
 
+from core.yaml.yaml_utils import _surround_with_yaml_block
 from generation.const import PLAYER_KEY, GAME_KEY, QUEST_TYPE_KEY, QUEST_FORMAT_KEY
 from model.game.state.game_state import GameState
 
 import yaml
 
+from prompt.mapper.game_mapper import GamePromptMapper
 from prompt.mapper.player_mapper import PlayerPromptMapper
 from prompt.mapper.quest_mapper import QuestTypeMapper
-
-
-def _surround_with_yaml_block(func: Callable[..., str]) -> Callable[..., str]:
-    @wraps(func)
-    def wrapper(*args: Any, **kwargs: Any) -> str:
-        result = func(*args, **kwargs)
-        return f"```yaml\n{result}\n```"
-    return wrapper
 
 
 @_surround_with_yaml_block
@@ -34,7 +28,7 @@ def handle_player_key(state: GameState) -> Callable[[], str]:
 
 def handle_game_key(state: GameState) -> Callable[[], str]:
     def result():
-        game_objects = state.context
+        game_objects = GamePromptMapper.to(state.context)
         return _to_yaml(game_objects, "game")
     
     return result

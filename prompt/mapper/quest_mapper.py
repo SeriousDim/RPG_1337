@@ -1,3 +1,4 @@
+from core.yaml.yaml_utils import _surround_with_yaml_block
 from generation.const import DELIVERY
 from core.resource_loader import ResourceLoader
 
@@ -15,5 +16,6 @@ class QuestTypeMapper:
         return QuestTypeMapper.QUEST_NAMES[quest_type]
     
     @staticmethod
+    @_surround_with_yaml_block
     def handle_quest_format_key(quest_type: str) -> str:
         return ResourceLoader.load_text(f"{QuestTypeMapper.QUEST_YAMLS_PATH}/{quest_type}.yaml")

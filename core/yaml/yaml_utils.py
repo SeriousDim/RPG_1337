@@ -1,6 +1,7 @@
 from dataclasses import asdict, fields, is_dataclass
 from enum import Enum
-from typing import Any
+from functools import wraps
+from typing import Any, Callable
 
 
 def to_yaml_primitive(value: Any) -> Any:
@@ -14,3 +15,11 @@ def to_yaml_primitive(value: Any) -> Any:
     if isinstance(value, (list, tuple, set)):
         return [to_yaml_primitive(v) for v in value]
     return value
+
+
+def _surround_with_yaml_block(func: Callable[..., str]) -> Callable[..., str]:
+    @wraps(func)
+    def wrapper(*args: Any, **kwargs: Any) -> str:
+        result = func(*args, **kwargs)
+        return f"```yaml\n{result}\n```"
+    return wrapper

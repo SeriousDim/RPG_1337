@@ -1,3 +1,4 @@
+from model.game.context.armors import Armors
 from model.items.armor import Armor
 
 
@@ -32,5 +33,17 @@ SHIELDS = [
     Armor(6, "Щит с бриллиантом", "щит", 10)
 ]
 
-def get_armors() -> list[Armor]:
-    return HELMETS + CHEST_PLATES + LEGGINGS + SHIELDS
+MAX_RANKS = {
+    'шлем': len(HELMETS),
+    'нагрудник': len(CHEST_PLATES),
+    'штаны': len(LEGGINGS),
+    'щит': len(SHIELDS),
+}
+
+def get_armors() -> Armors:
+    return Armors(
+        helmets=HELMETS,
+        chestplates=CHEST_PLATES,
+        leggings=LEGGINGS,
+        shields=SHIELDS
+    )

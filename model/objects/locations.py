@@ -1,3 +1,4 @@
+from model.game.context.locations import Locations
 from model.locations.locations import BufferedLocation, PrimaryLocation
 from model.objects.objects import HERBS, ORES
 
@@ -27,6 +28,8 @@ BUFFERED_LOCATIONS = [
 ]
 
 
-def get_locations() -> list[PrimaryLocation | BufferedLocation]:
-    return PRIMARY_LOCATIONS + BUFFERED_LOCATIONS
-
+def get_locations() -> Locations:
+    return Locations(
+        primary=PRIMARY_LOCATIONS,
+        buffered=BUFFERED_LOCATIONS,
+    )

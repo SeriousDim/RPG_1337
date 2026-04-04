@@ -12,3 +12,11 @@ class Items:
     weapons: list[Weapon]
     instruments: list[Instrument]
     armor: Armors
+    
+    def __dict__(self):
+        return {
+            "resources": self.resources,
+            "weapons": self.weapons,
+            "instruments": self.instruments,
+            "armor": self.armor
+        }

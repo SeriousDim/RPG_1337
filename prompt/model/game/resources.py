@@ -1,0 +1,19 @@
+from dataclasses import dataclass
+
+from prompt.model.item_dto import ItemDto
+
+
+@dataclass
+class Resources:
+    herbs: list[ItemDto]
+    ores: list[ItemDto]
+    
+    def __init__(self, resources):
+        self.herbs = [ItemDto(herb, exclude_fields=['resource_type']) for herb in resources.herbs]
+        self.ores = [ItemDto(ore, exclude_fields=['resource_type']) for ore in resources.ores]
+    
+    def __dict__(self):
+        return {
+            "herbs": [herb.__dict__() for herb in self.herbs],
+            "ores": [ore.__dict__() for ore in self.ores]
+        }
