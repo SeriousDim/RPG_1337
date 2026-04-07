@@ -47,3 +47,15 @@ def get_armors() -> Armors:
         leggings=LEGGINGS,
         shields=SHIELDS
     )
+
+
+def get_armor_names() -> list[str]:
+    return list(map(lambda a: a.name, HELMETS + CHEST_PLATES + LEGGINGS + SHIELDS))
+
+
+def find_any_armor_by_name(name: str) -> Armor:
+    filtered = list(filter(lambda a: a.name == name, HELMETS + CHEST_PLATES + LEGGINGS + SHIELDS))
+    if len(filtered) > 0:
+        return filtered[0]
+    
+    return None

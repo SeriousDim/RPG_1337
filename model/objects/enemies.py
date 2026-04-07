@@ -19,3 +19,7 @@ ENEMIES = [
     Enemy("Драконий всадник", 8, Health(170, 170), 25, 75),
     Enemy("Древний лич", 10, Health(220, 220), 32, 120),
 ]
+
+
+def get_enemy_names() -> list[str]:
+    return list(map(lambda e: e.name, ENEMIES))

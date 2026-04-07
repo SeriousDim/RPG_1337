@@ -10,6 +10,15 @@ class LlmResult:
     meta: dict
     path_to_save: str
     
+    @staticmethod
+    def read_content(dir, root_path = "./results/generated") -> dict:
+        full_dir_path = f"{root_path}/{dir}"
+        content_file_path = f"{full_dir_path}/content.yaml"
+        if os.path.exists(content_file_path):
+            with open(content_file_path, "r", encoding="UTF-8") as f:
+                return yaml.safe_load(f)
+        raise ValueError(f"Cannot savely load YAML content from {full_dir_path}")
+    
     def save(self, root_path: str = "./results/generated") -> None:
         full_dir_path = f"{root_path}/{self.path_to_save}"
         os.makedirs(full_dir_path, exist_ok=True)

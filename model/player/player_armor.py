@@ -34,3 +34,11 @@ class PlayerArmor:
         self.current_armor_absorbed_damage += self.chestplate.absorbed_damage
         self.current_armor_absorbed_damage += self.leggings.absorbed_damage
         self.current_armor_absorbed_damage += self.shield.absorbed_damage
+    
+    def get_all_armors(self):
+        return [
+            self.helmet, 
+            self.chestplate, 
+            self.leggings, 
+            self.shield
+        ]

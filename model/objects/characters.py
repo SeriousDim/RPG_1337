@@ -125,3 +125,10 @@ CHARACTERS = [
         items_can_be_accepted_for_delivery_or_collection=[HERBS[4], HERBS[5], ORES[0]]
     )
 ]
+
+def get_character_names():
+    return list(map(lambda c: c.name, CHARACTERS))
+
+
+def find_character_by_name(name):
+    return list(filter(lambda c: c.name == name, CHARACTERS))[0]

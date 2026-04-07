@@ -1,5 +1,6 @@
 from model.game.context.resources import Resources
 from model.items.instrument import Instrument
+from model.items.item import Item
 from model.items.resource import Resource, ResourceType
 from model.items.sword import Sword
 
@@ -69,3 +70,32 @@ def get_resources() -> Resources:
         herbs=HERBS,
         ores=ORES
     )
+
+
+def get_swords_names() -> list[str]:
+    return list(map(lambda r: r.name, SWORDS))
+
+
+def get_instrument_names() -> list[str]:
+    return list(map(lambda r: r.name, get_instruments()))
+
+
+def get_resources_names() -> list[str]:
+    return list(map(lambda r: r.name, HERBS + ORES))
+
+
+def find_any_item_by_name(name: str) -> Item:
+    filtered = list(filter(lambda i: i.name == name, SWORDS))
+    if len(filtered) > 0:
+        return filtered[0]
+    
+    filtered = list(filter(lambda i: i.name == name, get_instruments()))
+    if len(filtered) > 0:
+        return filtered[0]
+    
+    filtered = list(filter(lambda i: i.name == name, get_resources()))
+    if len(filtered) > 0:
+        return filtered[0]
+    
+    return None
+    
