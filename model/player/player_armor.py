@@ -1,12 +1,13 @@
 from dataclasses import dataclass
 
 from model.items.armor import Armor
+from model.objects.armors import get_max_possible_absorbed_damage
 
 
 @dataclass
 class PlayerArmor:
     current_armor_absorbed_damage: int = 0
-    max_possible_armor_absorbed_damage: int = 0
+    max_possible_armor_absorbed_damage: int = get_max_possible_absorbed_damage()
     helmet: Armor = None
     chestplate: Armor = None
     leggings: Armor = None

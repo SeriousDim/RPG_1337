@@ -59,3 +59,10 @@ def find_any_armor_by_name(name: str) -> Armor:
         return filtered[0]
     
     return None
+
+
+def get_max_possible_absorbed_damage() -> int:
+    return max(map(lambda a: a.absorbed_damage, HELMETS)) \
+            + max(map(lambda a: a.absorbed_damage, CHEST_PLATES)) \
+            + max(map(lambda a: a.absorbed_damage, LEGGINGS)) \
+            + max(map(lambda a: a.absorbed_damage, SHIELDS))

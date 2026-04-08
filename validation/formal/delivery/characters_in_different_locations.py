@@ -3,6 +3,8 @@ from validation.formal.base.abstract_validation import AbstractValidation
 
 
 class CharactersInDifferentLocationsValidation(AbstractValidation):
+    description = "Персонажи A и B должны находится в разных локациях"
+    
     def validate(self, quest: dict) -> bool:
         character_a_name = quest['parts']['resource_to_deliver']['character']
         character_b_name = quest['parts']['destination']['character_to_deliver']
