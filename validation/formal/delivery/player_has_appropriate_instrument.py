@@ -15,7 +15,7 @@ class PlayerHasAppropriateInstrumentValidation(AbstractValidation):
         resource_name = quest['parts']['resource_to_deliver']['resource']
         resource = find_any_item_by_name(resource_name)
         
-        if type(resource) == Resource:
+        if isinstance(resource, Resource):
             min_instrument_level = resource.min_instrument_rank
             resource_type = resource.type
             

@@ -23,3 +23,7 @@ ENEMIES = [
 
 def get_enemy_names() -> list[str]:
     return list(map(lambda e: e.name, ENEMIES))
+
+
+def find_enemy_by_name(name: str) -> Enemy:
+    return list(filter(lambda e: e.name == name, ENEMIES))[0]

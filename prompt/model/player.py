@@ -21,7 +21,7 @@ class Player:
             "level": self.level.__dict__(),
             "statistics_for_current_session": self.statistics_for_current_session.__dict__(),
             "health": self.health.__dict__(),
-            "money": self.money,
+            # "money": self.money, # деньги пока не используются
             "inventory": [item.__dict__() for item in self.inventory],
             "armor": self.armor.__dict__()
         }

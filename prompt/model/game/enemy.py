@@ -26,5 +26,5 @@ class Enemy:
             "rank": self.rank.__dict__(),
             "health": self.health.__dict__(),
             "damage_per_turn": self.damage_per_turn,
-            "money_for_killing_this_enemy": self.money_for_killing_this_enemy
+            # "money_for_killing_this_enemy": self.money_for_killing_this_enemy # деньги пока не используются
         }
