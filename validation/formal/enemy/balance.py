@@ -11,12 +11,15 @@ class BalanceValidation(AbstractValidation):
     
     def __init__(self, player: Player):
         self.player = player
-        self.description = "При текущем количестве здоровья, лучшем оружии и текущей броне игрок сможет одолеть данных врагов в таком количестве"
+        self.description = "Игрок может пройти часть квеста, в которой он встречается с противником (quest.parts.enemy_to_face)"
     
     def validate(self, quest: dict) -> bool:
         enemy_name = quest['parts']['enemy_to_face']['enemy']
         enemy_amount = quest['parts']['enemy_to_face']['amount']
         enemy = find_enemy_by_name(enemy_name)
+        
+        if enemy_amount <= 0:
+            return False
 
         # Находим лучший меч игрока по рангу
         best_sword = None
@@ -82,7 +85,7 @@ class BalanceValidation(AbstractValidation):
             # Броня поглощает часть урона
             absorbed = self.player.armor.current_armor_absorbed_damage
             total_enemy_damage -= absorbed
-            total_enemy_damage = min(0, total_enemy_damage)
+            total_enemy_damage = max(0, total_enemy_damage)
 
             self.player.health.current -= total_enemy_damage
 

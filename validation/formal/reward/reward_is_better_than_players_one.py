@@ -3,13 +3,13 @@ from model.player.player import Player
 from validation.formal.base.abstract_validation import AbstractValidation
 
 
-class RewardIsBetterThanPLayersOneValidation(AbstractValidation):
+class RewardIsBetterThanPlayersOneValidation(AbstractValidation):
     player: Player
     
     def __init__(self, player: Player):
         super().__init__()
         self.player = player
-        self.description = "Предлагаемая награда должна быть лучше по рангу, чем предметы такого же типа, которые есть у игрока в данный момент в инвентаре или в броне"
+        self.description = "Предлагаемая награда (quest.reward.item_name) должна быть лучше по рангу (rank), чем предметы такого же типа (type), которые есть у игрока в данный момент в его инвентаре или в броне"
     
     def validate(self, quest: dict) -> bool:
         reward = find_any_item(quest[self.REWARD]['item_name'])

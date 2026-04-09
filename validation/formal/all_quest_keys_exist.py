@@ -2,7 +2,7 @@ from validation.formal.base.abstract_validation import AbstractValidation
 
 
 class AllQuestKeysExistValidation(AbstractValidation):
-    description = "Все нужные ключи в квесте существуют"
+    description = "Структура квеста соответствует заданному формату, все необходимые ключи прописаны"
     
     def validate(self, quest: dict) -> bool:
         if 'parts' not in quest:

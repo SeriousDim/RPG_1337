@@ -5,8 +5,8 @@ from model.objects.objects import get_instrument_names, get_resources_names, get
 from validation.formal.base.abstract_validation import AbstractValidation
 
 
-class EntitiesExistanceValidation(AbstractValidation):
-    description = "Все упоминаемые сущности должны существовать в игре"
+class EntitiesExistenceValidation(AbstractValidation):
+    description = "Все упоминаемые сущности в структуре квеста должны существовать в игре"
     
     def validate(self, quest: dict):
         parts = quest['parts']

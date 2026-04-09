@@ -9,7 +9,7 @@ class PlayerHasAppropriateInstrumentValidation(AbstractValidation):
     
     def __init__(self, player: Player):
         self.player = player
-        self.description = "Игрок должен иметь подходящий по рангу инструмент для добычи ресурса"
+        self.description = "Игрок должен иметь подходящий по рангу (rank) и по типу (type) инструмент в своем инвентаре для добычи ресурса (quest.parts.resource_to_deliver.resource)"
     
     def validate(self, quest: dict) -> bool:
         resource_name = quest['parts']['resource_to_deliver']['resource']
@@ -30,4 +30,7 @@ class PlayerHasAppropriateInstrumentValidation(AbstractValidation):
             return False
     
     def find_best_instrument_rank(self, instruments, type):
-        return max(map(lambda i: i.rank, filter(lambda i: i.type == type, instruments)))
+        filtered_by_type = list(filter(lambda i: i.type == type, instruments))
+        if len(filtered_by_type) == 0:
+            return 0
+        return max(map(lambda i: i.rank, filtered_by_type))

@@ -3,7 +3,7 @@ from validation.formal.base.abstract_validation import AbstractValidation
 
 
 class ItemIsAcceptableByCharacterValidation(AbstractValidation):
-    description = "Предлагаемый предмет для добычи должен приниматься данным персонажем в части destination"
+    description = "Предлагаемый ресурс для добычи (quest.parts.resource_to_deliver.resource) должен приниматься персонажем в quest.parts.destination.character_to_deliver"
     
     def validate(self, quest: dict) -> bool:
         part = quest['parts'][self.RESOURCE_TO_DELIVER]

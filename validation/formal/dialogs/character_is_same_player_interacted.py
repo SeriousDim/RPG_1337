@@ -7,7 +7,7 @@ class CharacterIsSamePlayerInteractedValidation(AbstractValidation):
     
     def __init__(self, interacted_character: Character):
         self.interacted_character = interacted_character
-        self.description = "Персонаж, который выдал квест совпадает с персонажем, к которому подошел игрок"
+        self.description = "Персонаж quest.parts.resource_to_deliver.character совпадает с персонажем, к которому подошел игрок"
     
     def validate(self, quest: dict) -> bool:
         character_name = quest['parts']['resource_to_deliver']['character']

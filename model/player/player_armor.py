@@ -37,9 +37,9 @@ class PlayerArmor:
         self.current_armor_absorbed_damage += self.shield.absorbed_damage
     
     def get_all_armors(self):
-        return [
+        return list(filter(lambda i: i != None, [
             self.helmet, 
             self.chestplate, 
             self.leggings, 
             self.shield
-        ]
+        ]))

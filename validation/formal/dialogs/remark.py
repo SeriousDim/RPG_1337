@@ -2,9 +2,9 @@ from validation.formal.base.abstract_validation import AbstractValidation
 
 
 class RemarkValidation(AbstractValidation):
-    description = "Генерируется заданный диапазон реплик для каждой части"
     MIN_REMARKS = 5
     MAX_REMARKS = 10
+    description = f"Генерируется заданный диапазон (от {MIN_REMARKS} до {MAX_REMARKS}) реплик (dialogs) для каждой из частей (quest.parts)"
     
     def validate(self, quest: dict) -> bool:
         parts = quest['parts']
