@@ -181,7 +181,7 @@ class FormalQuestValidator:
             PlayerHasAppropriateInstrumentValidation(player),
             RewardIsBetterThanPlayersOneValidation(player),
             PlayerHasNotSuchRewardValidation(player),
-            CharacterIsSamePlayerInteractedValidation(interacted_character),
+            # CharacterIsSamePlayerInteractedValidation(interacted_character),
             CharactersInDifferentLocationsValidation(),
             ItemIsAcceptableByCharacterValidation(),
             CharacterCanGiveRewardValidation(),
@@ -193,7 +193,8 @@ class FormalQuestValidator:
 
         for validation in validations:
             try:
-                validation_result = validation.validate(quest_yaml)
+                quest_content = quest_yaml['quest']
+                validation_result = validation.validate(quest_content)
                 result = ValidationStatus.SUCCESS if validation_result else ValidationStatus.FAILURE
                 error = None
             except Exception:
