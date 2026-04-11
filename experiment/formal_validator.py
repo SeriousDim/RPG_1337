@@ -1,11 +1,13 @@
 from dataclasses import dataclass
+from datetime import datetime
 from enum import Enum
-
+import json
 from pathlib import Path
 from typing import Any
 import traceback
 
 import yaml
+
 
 from validation.formal.base.abstract_validation import AbstractValidation
 
@@ -26,6 +28,14 @@ class ValidationStatus(str, Enum):
     SUCCESS = "успешно"
     FAILURE = "провал"
     ERROR = "ошибка"
+
+
+VALIDATION_EMOJI_BY_STATUS = {
+    ValidationStatus.SUCCESS: "✅",
+    ValidationStatus.FAILURE: "❌",
+    ValidationStatus.ERROR: "⚠️",
+}
+
 
 
 @dataclass(slots=True)
@@ -62,10 +72,10 @@ class FormalQuestValidator:
 
         return sorted(subfolder_paths)
 
-    def validate(self, directory: str | Path, player: Any = None, interacted_character: Any = None):
-        validation_results = []
+    def validate(self, directory: str | Path, player: Any = None, interacted_character: Any = None) -> None:
+        base_path = Path(directory)
 
-        for subfolder_path in self.get_subfolder_paths(directory):
+        for subfolder_path in self.get_subfolder_paths(base_path):
             content_yaml_path = subfolder_path / "content.yaml"
             if not content_yaml_path.exists():
                 continue
@@ -73,32 +83,91 @@ class FormalQuestValidator:
             with content_yaml_path.open("r", encoding="utf-8") as file:
                 quest_yaml = yaml.safe_load(file)
 
-            validation_result = self.run_validations_for_yaml(
+            self.run_validations_for_yaml(
                 quest_yaml,
+                content_yaml_path=content_yaml_path,
+                base_directory=base_path,
                 player=player,
                 interacted_character=interacted_character,
             )
-            validation_results.append(
-                {
-                    "path": content_yaml_path,
-                    "quest": quest_yaml,
-                    "result": validation_result,
-                }
-            )
 
-        return validation_results
 
-    def run_validations_for_yaml(self, quest_yaml: dict, player: Any, interacted_character: Any):
+    def run_validations_for_yaml(
+        self,
+        quest_yaml: dict,
+        content_yaml_path: Path,
+        base_directory: Path,
+        player: Any,
+        interacted_character: Any,
+    ):
         base_validations = self.create_base_validations(player)
         other_validations = self.create_other_validations(player, interacted_character)
-
         base_results = self.run_validation_list(base_validations, quest_yaml)
         other_results = self.run_validation_list(other_validations, quest_yaml)
+        all_results = base_results + other_results
+        self.save_validation_artifacts(
+            content_yaml_path=content_yaml_path,
+            base_directory=base_directory,
+            validation_results=all_results)
 
-        return {
-            "base_validations": [result.to_dict() for result in base_results],
-            "other_validations": [result.to_dict() for result in other_results],
-        }
+
+    def save_validation_artifacts(
+        self,
+        content_yaml_path: Path,
+        base_directory: Path,
+        validation_results: list[ValidationResult],
+    ) -> None:
+        relative_path = content_yaml_path.parent.relative_to(base_directory)
+        parts = relative_path.parts
+
+        experiment_name = parts[0] if len(parts) > 0 else content_yaml_path.parent.name
+        subfolder_path = Path(*parts[1:]) if len(parts) > 1 else Path(content_yaml_path.parent.name)
+        folder_path = content_yaml_path.parent.as_posix()
+        timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+        report_dir = Path("results") / "validation" / experiment_name / "report"
+        json_dir = Path("results") / "validation" / experiment_name / "json"
+        report_dir.mkdir(parents=True, exist_ok=True)
+        json_dir.mkdir(parents=True, exist_ok=True)
+
+        report_path = report_dir / f"{subfolder_path.name}.md"
+        json_path = json_dir / f"{subfolder_path.name}.json"
+
+        report_content = self.build_markdown_report(
+            folder_path=folder_path,
+            timestamp=timestamp,
+            validation_results=validation_results,
+        )
+        report_path.write_text(report_content, encoding="utf-8")
+        json_path.write_text(
+            json.dumps([result.to_dict() for result in validation_results], ensure_ascii=False, indent=2),
+            encoding="utf-8",
+        )
+
+    def build_markdown_report(
+        self,
+        folder_path: str,
+        timestamp: str,
+        validation_results: list[ValidationResult],
+    ) -> str:
+        lines = [f"# {folder_path}", timestamp, '']
+
+        for validation_result in validation_results:
+            emoji = VALIDATION_EMOJI_BY_STATUS[validation_result.result]
+            lines.append(f"{validation_result.validation}: {emoji}")
+            if validation_result.description:
+                lines.append(validation_result.description)
+
+            if validation_result.result == ValidationStatus.ERROR and validation_result.error:
+                lines.append("")
+                lines.append("```")
+                lines.append(validation_result.error.rstrip())
+                lines.append("```")
+
+            lines.append("")
+
+        return "\n".join(lines).rstrip() + "\n"
+
 
     def create_base_validations(self, player: Any) -> list[AbstractValidation]:
         return [
