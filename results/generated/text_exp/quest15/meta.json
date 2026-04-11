@@ -1,0 +1,48 @@
+{
+    "content": "```yaml\nquest:\n  parts:\n    resource_to_deliver:\n      dialogs:\n        - speaker: \"Лира Лекарь\"\n          remark: \"Мне нужно немного Подорожника для лечебных припарок. Ты как раз подходишь для такой работы.\"\n        - speaker: \"Лира Лекарь\"\n          remark: \"Собери ровно 3 штуки и возвращайся ко мне.\"\n        - speaker: \"Лира Лекарь\"\n          remark: \"Подорожник растёт в Подорожниковом Бору, недалеко от Деревни Речных Лугов.\"\n        - speaker: \"Лира Лекарь\"\n          remark: \"Без него мне не приготовить свежие повязки для раненых.\"\n        - speaker: \"Лира Лекарь\"\n          remark: \"Принеси добычу сначала ко мне, а потом я направлю тебя дальше.\"\n      character: \"Лира Лекарь\"\n      resource: \"Подорожник\"\n      amount: 3\n\n    enemy_to_face:\n      dialogs:\n        - speaker: \"Гоблин-вор\"\n          remark: \"Хе-хе, травка уже почти у тебя? Отдай её мне, и, может быть, уйдёшь целым.\"\n        - speaker: \"Гоблин-вор\"\n          remark: \"Я слежу за каждым, кто таскает добычу по этим дорогам.\"\n        - speaker: \"Гоблин-вор\"\n          remark: \"Трое листьев — хорошая добыча. А вот и моя добыча.\"\n        - speaker: \"Гоблин-вор\"\n          remark: \"Посмотрим, хватит ли у тебя сил отбиться.\"\n        - speaker: \"Гоблин-вор\"\n          remark: \"Не рассчитывай, что я дам тебе пройти дальше без драки.\"\n      enemy: \"Гоблин-вор\"\n      amount: 1\n\n    destination:\n      dialogs:\n        - speaker: \"Лира Лекарь\"\n          remark: \"Отлично, Подорожник у тебя. Теперь отнеси его в Королевскую столицу к Гаррику Кузнецу.\"\n        - speaker: \"Лира Лекарь\"\n          remark: \"Он ждёт этот ресурс для своих запасов и хорошо вознаградит за доставку.\"\n        - speaker: \"Лира Лекарь\"\n          remark: \"Передай ему всё без остатка, ровно 3 штуки.\"\n        - speaker: \"Лира Лекарь\"\n          remark: \"После этого твоя работа будет завершена.\"\n        - speaker: \"Лира Лекарь\"\n          remark: \"Путь не близкий, но ты уже доказал, что справишься.\"\n      character_to_deliver: \"Гаррик Кузнец\"\n\n  objective_description: \"Собери 3 Подорожника, отбейся от нападающего на дороге, а затем доставь ресурс Гаррику Кузнецу в Королевскую столицу.\"\n\n  reward:\n    item_name: \"Каменный меч\"\n\n  explanation:\n    resource_to_deliver:\n      dialogs: \"Выбран персонаж Лира Лекарь, потому что она в Деревне Речных Лугов принимает Подорожник и её квесты логично связаны с лечебными ресурсами. Количество ресурса задано как 3, чтобы оно было выполнимо для игрока с инструментом ранга 1 и соответствовало ранней стадии прогрессии.\"\n      character: \"Лира Лекарь\"\n      resource: \"Подорожник\"\n      amount: \"3\"\n\n    enemy_to_face:\n      dialogs: \"После добычи ресурса игрок встречает Гоблина-ворa, так как это противник подходящего ранга для первого уровня и он органично вписывается в дорожную засаду между поселениями. Диалоги содержат предупреждение и угрозу, но не вводят никаких отсутствующих в мире сущностей.\"\n      enemy: \"Гоблин-вор\"\n      amount: \"1\"\n\n    destination:\n      dialogs: \"В качестве получателя выбран Гаррик Кузнец в Королевской столице: он принимает Подорожник и может логично выдать награду. Персонаж-отправитель и персонаж-получатель различаются, как требуется, а маршрут остаётся в пределах существующих локаций.\"\n      character_to_deliver: \"Гаррик Кузнец\"\n```",
+    "additional_kwargs": {
+        "refusal": null
+    },
+    "response_metadata": {
+        "token_usage": {
+            "completion_tokens": 942,
+            "prompt_tokens": 9462,
+            "total_tokens": 10404,
+            "completion_tokens_details": {
+                "accepted_prediction_tokens": 0,
+                "audio_tokens": 0,
+                "reasoning_tokens": 0,
+                "rejected_prediction_tokens": 0
+            },
+            "prompt_tokens_details": {
+                "audio_tokens": 0,
+                "cached_tokens": 8960
+            }
+        },
+        "model_provider": "openai",
+        "model_name": "gpt-5.4-mini-2026-03-17",
+        "system_fingerprint": null,
+        "id": "chatcmpl-DTWPjYTryeignDdC2wkEyPB8t7HVo",
+        "service_tier": "default",
+        "finish_reason": "stop",
+        "logprobs": null
+    },
+    "type": "ai",
+    "name": null,
+    "id": "lc_run--019d7d96-1b89-7d20-aa01-fdc3d5246015-0",
+    "tool_calls": [],
+    "invalid_tool_calls": [],
+    "usage_metadata": {
+        "input_tokens": 9462,
+        "output_tokens": 942,
+        "total_tokens": 10404,
+        "input_token_details": {
+            "audio": 0,
+            "cache_read": 8960
+        },
+        "output_token_details": {
+            "audio": 0,
+            "reasoning": 0
+        }
+    }
+}

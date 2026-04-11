@@ -10,7 +10,7 @@ quest_gen = ManyQuestGenerations(
     provider="proxy_api",
     context=context,
     model="gpt-5.4-mini",
-    experiment_name="text_exp_2",
+    experiment_name="text_exp",
     amount=3
 )
 

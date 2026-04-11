@@ -13,7 +13,9 @@ class QuestTypeMapper:
     
     @staticmethod
     def handle_quest_type_key(quest_type: str) -> str:
-        return QuestTypeMapper.QUEST_NAMES[quest_type]
+        for key in QuestTypeMapper.QUEST_NAMES:
+            if quest_type.startswith(key):
+                return QuestTypeMapper.QUEST_NAMES[key]
     
     @staticmethod
     @_surround_with_yaml_block
