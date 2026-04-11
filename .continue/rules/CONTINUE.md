@@ -1,252 +1,276 @@
-# CONTINUE.md — руководство по проекту
+# CONTINUE.md — project guide
 
-> Этот файл предназначен для Continue (и людей): кратко описывает архитектуру, ключевые модули и типовые рабочие операции.
-> 
-> Примечание: в репозитории не найден `requirements.txt/pyproject.toml`, поэтому разделы про зависимости и запуск помечены как **нуждается в проверке**.
+> This file is meant for Continue and for humans: it explains the architecture, the main modules, and the common ways to work in this repository.
+>
+> Note: there is no `requirements.txt` or `pyproject.toml` in the repo, so dependency and run instructions below are marked as **needs verification** where appropriate.
 
 ## 1) Project Overview
 
-### Назначение
-Проект выглядит как прототип/библиотека для:
-- описания **игровых сущностей** (игрок, предметы, броня, уровни, квесты) через Python `dataclass`
-- генерации/подготовки **промптов** для LLM (папка `resources/prompts`)
-- интеграции с LLM-провайдерами через **адаптеры** (`llm_adapters/*`)
-- запуска **оценок качества ответов** (LLM-as-a-judge) через `deepeval` (скрипт `view/g_eval_test.py`), с сохранением результатов в `results/`
+### Purpose
+This codebase looks like a prototype/library for:
+- defining **game entities** with Python `dataclass`-style models: player, items, armor, locations, enemies, quests
+- generating and filling **LLM prompts** from game state and catalog data
+- calling LLMs through both **LangChain** and **DeepEval** adapters
+- parsing model output into YAML + metadata artifacts
+- validating generated quests with rule-based checks
 
-### Ключевые технологии
-- Python (по артефактам видно Python 3.13, но **нуждается в проверке**)
-- `dataclasses`
-- `deepeval` (метрики GEval/AnswerRelevancy)
-- `openai` SDK (для OpenAI-compatible endpoint)
-- `requests` (для Gemini через HTTP)
-- `python-dotenv` (загрузка `.env`)
-- `pandas` (сохранение результатов в CSV)
-- `langchain_core.prompts.ChatPromptTemplate` (заготовка для сборки промпта)
+### Key technologies
+- Python 3.x (compiled artifacts suggest 3.13, but **needs verification**)
+- `dataclasses` and `attrs`
+- `PyYAML`
+- `python-dotenv`
+- `langchain-core` and provider integrations
+- `deepeval`
+- `openai`
+- `requests`
+- `pandas`
 
-### Высокоуровневая архитектура
-- **Domain model**: `model/` — игровые сущности как dataclass’ы (Player/Items/Armor/Quest/etc.)
-- **Game data каталоги**: `model/objects/*` — «справочники» (списки мечей, ресурсов, брони, уровней)
-- **Resources**: `resources/prompts/*.txt` — текстовые шаблоны промптов
-- **Engine**: `engine/resource_loader.py` — безопасная загрузка ресурсов из `resources/`
-- **Context/Prompt**: `context/*` — генерация контекста и промптов (частично пусто/заглушки)
-- **LLM adapters**: `llm_adapters/*` — модели/клиенты, совместимые с интерфейсом `DeepEvalBaseLLM`
-- **View (скрипты)**: `view/*` — runnable-модули для проверок/экспериментов (в т.ч. оценка судей)
+### High-level architecture
+- **Domain model**: `model/` contains players, items, quests, mobs, and locations.
+- **Game catalogs / world data**: `model/objects/` and `model/game/context/` define fixed lists of characters, enemies, armor, resources, and locations.
+- **Prompt layer**: `resources/prompts/` stores prompt templates; `prompt/generator/` loads them; `generation/context/` assembles template variables.
+- **LLM adapters**: `llm/langchain/` and `llm/deepeval/` build model clients for different providers.
+- **Generation pipeline**: `experiment/` ties prompt creation, model invocation, parsing, and result saving together.
+- **Validation**: `validation/formal/` contains rule objects that check schema and entity consistency in generated quests.
+- **Artifacts**: `results/` stores generated YAML, metadata, and evaluation CSVs.
 
 
 ## 2) Getting Started
 
 ### Prerequisites
-- Python **3.11+** (рекомендуется), фактически в `.venv` встречается `cpython-313` (**нуждается в проверке**)
-- Установленные зависимости (см. ниже)
-- Переменные окружения (для LLM-запросов):
-  - `PROXY_API_KEY` — используется в `view/g_eval_test.py`
+- Python **3.11+** is a safe assumption; compiled files in `.venv` suggest Python 3.13 (**needs verification**)
+- `pip` + a virtual environment (`.venv` or similar)
+- Internet access for LLM calls
+- `PROXY_API_KEY` in the environment for ProxyAPI-based providers and evaluation scripts
 
-### Установка (нуждается в проверке)
-Так как файл зависимостей не найден, ниже — предполагаемый минимум (уточните по вашей среде):
+### Installation
+No lockfile or dependency manifest was found, so install the likely minimum manually (**verify against your environment**):
+- `attrs`
+- `PyYAML`
+- `python-dotenv`
+- `langchain-core`
+- `langchain-openai`
+- `langchain-anthropic`
+- `langchain-google-genai`
+- `langchain-openrouter`
+- `deepeval`
+- `openai`
+- `requests`
+- `pandas`
 
-```bash
-pip install deepeval openai requests python-dotenv pandas langchain-core
-```
+Typical setup:
+1. create/activate a virtual environment
+2. install the packages above
+3. export `PROXY_API_KEY`
+4. run the scripts you need
 
-Если у вас уже есть виртуальное окружение `.venv`, активируйте его и установите зависимости в него.
+### Basic usage examples
+- Load a prompt template by name through `prompt/generator/prompt_generator.py`
+- Build a game state and generate prompt context through `generation/context/quest_context_generator.py`
+- Run the single quest generation flow from `experiment/single_generation.py`
+- Run the judge evaluation script in `tests/g_eval_test.py` to produce a CSV under `results/`
 
-### Базовые примеры запуска
-Показать содержимое промпта из `resources/`:
-
-```bash
-python -m view.context_test
-```
-
-Запустить эксперимент по «судьям» (deepeval), сохранить CSV в `results/results.csv`:
-
-```bash
-python -m view.g_eval_test
-```
-
-Важно: `view/g_eval_test.py` обращается к внешним API через ProxyAPI, без `PROXY_API_KEY` упадёт.
-
-### Запуск тестов
-Тестовый фреймворк как отдельный набор тестов не обнаружен (нет `tests/`, нет `pytest`-тестов). Скрипты в `view/` выполняют роль проверок.
+### Running tests
+There is no formal pytest suite or test runner configuration detected.
+Current verification is mostly done by:
+- executing the scripts in `tests/`
+- checking the YAML output in `results/generated/` or `results/`
+- applying rule-based validation from `validation/formal/`
 
 
 ## 3) Project Structure
 
-### Директории
-- `model/` — доменная модель игры
-  - `model/player/` — Player, уровни, здоровье, статистика, броня
-  - `model/items/` — базовые Item/Instrument/Weapon/Sword/Armor/Resource
-  - `model/quest/` — структура квеста (Quest/QuestPart)
-  - `model/objects/` — «каталоги» предопределённых объектов (мечи, ресурсы, броня, уровни)
-- `resources/` — ресурсы (тексты промптов)
-  - `resources/prompts/automata_v1.txt` — шаблон промпта для генерации квеста (YAML-формат)
-- `engine/` — утилиты инфраструктуры
-  - `engine/resource_loader.py` — безопасная загрузка файлов из `resources/`
-- `context/` — генерация контекста/промптов
-  - `context/prompt_generator.py` — заготовка генератора (сейчас есть заглушки/ошибки, см. ниже)
-  - `context/context_generator.py` — файл пустой (**нуждается в реализации/удалении**)
-- `llm_adapters/` — адаптеры LLM под `deepeval`
-  - `open_ai_competible_chat_llm.py` — OpenAI-compatible chat endpoint через `openai.OpenAI`
-  - `gemini.py` — Gemini via HTTP POST
-- `view/` — runnable-скрипты/эксперименты
-  - `context_test.py` — печатает промпт
-  - `g_eval_test.py` — прогон метрик `deepeval` разными judge-моделями
-- `results/` — артефакты экспериментов
-  - `results.csv` — результаты `g_eval_test.py`
-  - `logprobs.md` — заметки о поддержке log_probs разными моделями
+### Main directories
+- `core/` — infrastructure helpers
+  - `resource_loader.py` — safe loading of files from `resources/`
+  - `find.py` — helper for resolving items/armor by name
+  - `level_utils.py`, `yaml/` — supporting utilities
+- `generation/` — prompt context assembly
+  - `const.py` — template keys such as `player`, `game`, `quest_type`, `quest_format`
+  - `context/quest_context_generator.py` — generates prompt variables from `GameState`
+  - `objects/` — generators for player and world context
+- `prompt/` — prompt loading and parsing
+  - `generator/prompt_generator.py` — loads prompt templates into `ChatPromptTemplate`
+  - `parser/result.py` — `LlmResult` model and save/load helpers
+  - `parser/result_parser.py` — converts LLM messages into a savable result
+- `llm/` — LLM provider adapters
+  - `providers.py` — environment-backed provider registry
+  - `langchain/` — LangChain model builders
+  - `deepeval/` — DeepEval-compatible model builders and wrappers
+- `model/` — domain models and catalogs
+  - `model/player/` — `Player`, `PlayerArmor`, `PlayerLevel`, health, statistics
+  - `model/items/` — `Item`, `Instrument`, `Weapon`, `Sword`, `Armor`, `Resource`
+  - `model/mobs/` — `Character`, `Enemy`
+  - `model/locations/` — location entities
+  - `model/objects/` — fixed catalogs of items, characters, enemies, armors, locations
+  - `model/game/` — DTO-like structures used for prompt context and game state
+- `resources/` — prompt and schema assets
+  - `prompts/automata_v1.txt`, `prompts/automata_v2.txt` — quest-generation prompts
+  - `prompts/static_charatcers.txt` — static character prompt asset; filename looks misspelled, verify if intentional
+  - `quest_yamls/delivery.yaml`, `quest_yamls/delivery_v2.yaml` — YAML format examples/schemas for delivery quests
+- `experiment/` — end-to-end orchestration
+  - `single_generation.py` — prompt + model + parsing + save flow
+  - `many_generations.py`, `formal_validator.py` — batch and validation helpers
+- `tests/` — runnable evaluation scripts rather than a classic unit-test suite
+  - `g_eval_test.py` — DeepEval-based judge comparison over multiple models
+  - `prompt_test.py`, `context_test.py`, `many_generation_test.py` — ad hoc verification scripts
+- `validation/` — rule-based validation
+  - `formal/` — quest schema, entity existence, and balance checks
+  - `llm_based/` — currently empty in this checkout
+- `results/` — generated artifacts and evaluation outputs
 
-### Важные файлы и замечания
-- `engine/resource_loader.py`
-  - Использует safe-resolve, предотвращая выход из `resources/` через `..`.
-  - Это критичный компонент для безопасной загрузки текстовых шаблонов.
+### Important files
+- `core/resource_loader.py`
+  - safe path resolution prevents traversal outside `resources/`
+- `prompt/generator/prompt_generator.py`
+  - loads `resources/prompts/<name>.txt` through `ResourceLoader`
+- `generation/context/quest_context_generator.py`
+  - maps prompt keys to context payloads from `GameState`
+- `experiment/single_generation.py`
+  - orchestrates `GameState` -> prompt -> model -> parsed result -> save
+- `prompt/parser/result.py`
+  - saves raw model output, metadata, and parsed YAML to disk
+- `validation/formal/*.py`
+  - checks required keys, entity existence, delivery-quest constraints, and rewards
 
-- `context/prompt_generator.py` (нуждается в проверке/правках)
-  - `find_prompt_template_by_name()` сейчас возвращает строку `"prompts/{prompt_name}.txt"` без f-string → фактически всегда пытается загрузить файл с буквальным `{prompt_name}`.
-  - `generate_prompt()` сейчас игнорирует заполненный промпт и возвращает только системное сообщение.
-  - `fill_context()` возвращает пустую строку.
-
-- `view/g_eval_test.py`
-  - Это не юнит-тест, а эксперимент/скрипт.
-  - Требует `PROXY_API_KEY` и интернет.
-  - Пишет CSV в `./results/results.csv`.
-
-### Конфигурация
-- `.gitignore` игнорирует `.env`, `.vscode`, кэши, `.deepeval`.
-- Файлы `.vscode/*` есть, но чтение `.vscode/settings.json` запрещено политикой инструментов (security).
+### Configuration files
+- `.gitignore` — ignores `.env`, `.vscode`, caches, `.deepeval`, and other local artifacts
+- `.env` — expected locally for API keys; should not be committed
+- `.continue/rules/CONTINUE.md` — this guide, auto-loaded by Continue for this project
 
 
 ## 4) Development Workflow
 
-### Стандарты кода
-- Используются `dataclass` и простые типы; старайтесь сохранять модель максимально «плоской» и сериализуемой.
-- Для новых сущностей:
-  - добавляйте типы в `model/`
-  - добавляйте справочники/таблицы в `model/objects/`, если это «фиксированный контент»
+### Coding conventions
+- Prefer small, serializable `dataclass`-style models.
+- Keep game content in catalog modules rather than hardcoding it in prompts.
+- Use exact names from the catalogs when validating or generating quests.
+- Be careful with side effects at import time: several provider modules read environment variables when imported.
 
-Рекомендуемые (но не зафиксированные в репо) инструменты:
-- форматирование: `black`
-- сортировка импортов: `isort`
-- линтинг: `ruff`
+### Testing approach
+Recommended layers:
+1. **resource loading** — ensure prompt and YAML assets resolve safely
+2. **prompt context generation** — verify the keys `{player}`, `{game}`, `{quest_type}`, `{quest_format}` are filled correctly
+3. **LLM response parsing** — verify `LlmResult.extract_yaml_content()` handles fenced and unfenced YAML
+4. **formal validation** — run the rule classes in `validation/formal/`
 
-(**нуждается в проверке/добавлении конфигов**)
-
-### Подход к тестированию
-- Сейчас основная проверка — запуск модулей `view/*`.
-- Рекомендуется добавить `pytest` и покрыть:
-  - `ResourceLoader._safe_resolve()` (в т.ч. атаки через `../`)
-  - корректность каталогов объектов (`SWORDS`, `HELMETS`, …)
-  - сериализацию Player/Items в формат, ожидаемый промптами
-
-### Build/Deploy
-- Явного пайплайна сборки/деплоя не обнаружено.
-- Проект сейчас выглядит как локальный исследовательский/прототипный.
+### Build / deployment
+- No build pipeline, packaging config, or deployment automation was found.
+- Treat the project as a local research/prototyping repository unless a later manifest or CI workflow is added.
 
 ### Contribution guidelines
-- Делайте изменения небольшими PR/коммитами.
-- Для изменений промптов:
-  - обновляйте файлы в `resources/prompts/`
-  - фиксируйте ожидаемый формат (например YAML schema) рядом, либо в комментариях в шаблоне
-- Для изменений, связанных с LLM и метриками:
-  - сохраняйте результаты в `results/` только если это осознанная фиксация артефактов (иначе лучше `.gitignore`)
+- Keep changes aligned across the whole pipeline: catalogs, prompt templates, context generators, parsers, and validators.
+- When adding a new entity, update both the source catalog and the validation rules that reference that catalog.
+- Commit generated artifacts only when they are intended as examples or benchmarks.
+- Prefer small focused changes over broad refactors.
 
 
 ## 5) Key Concepts
 
-### Термины домена
-- **Rank** — уровень/ранг предмета (в `Item.rank`) и минимальные требования к инструменту для ресурсов.
-- **Instrument/Weapon/Sword** — иерархия предметов:
-  - `Item` → `Instrument` → `Weapon` → `Sword`
-- **Armor** — предмет, который поглощает урон (`absorbed_damage`).
-- **PlayerArmor** — агрегирует части брони и суммарный `current_armor_absorbed_damage`.
-- **LevelGradation / LEVELS** — таблица XP до следующего уровня.
-- **Quest / QuestPart** — квест как набор частей с диалогами и хуками жизненного цикла.
+### Domain terminology
+- **Rank** — item progression tier used by weapons, resources, and armor.
+- **Item hierarchy** — `Item` → `Instrument` → `Weapon` → `Sword`.
+- **Armor** — item with `absorbed_damage` used by `PlayerArmor`.
+- **Resource** — harvestable item with `resource_type` and `min_instrument_rank`.
+- **GameState** — combines the current `Player` and generated world context.
+- **Quest** — currently modeled as a YAML-driven object with delivery/encounter/destination parts.
+- **Validation** — formal rules that ensure the generated quest follows the expected schema and only references existing entities.
 
-### Промпты
-- `automata_v1.txt` задаёт генерацию **ровно одного квеста** типа `{quest_type}` в YAML-формате `{quest_format}`.
-- В промпте есть строгие требования: не упоминать сущности, которых нет в игре.
+### Core abstractions
+- **Prompt templates**: text files under `resources/prompts/` with placeholders like `{player}`, `{game}`, `{quest_type}`, `{quest_format}`.
+- **Context generators**: functions/classes in `generation/context/` that fill the placeholders.
+- **Result wrapper**: `prompt/parser/result.py:LlmResult` saves content and metadata side by side.
+- **Provider registry**: `llm/providers.py` exposes provider credentials and base URLs.
+- **Model adapters**: LangChain and DeepEval wrappers normalize different API providers behind a common interface.
 
-### Оценка ответов (deepeval)
-- `GEval` используется для метрики «Correctness».
-- `AnswerRelevancyMetric` — релевантность ответа.
-- Judge-модели в `view/g_eval_test.py` включают:
-  - GPT через ProxyAPI OpenAI endpoint
-  - Claude через ProxyAPI Anthropic endpoint
-  - Gemini через HTTP adapter
-  - DeepSeek через OpenRouter
+### Design patterns used
+- Catalog/data-table pattern for fixed world content
+- Adapter pattern for LLM provider integrations
+- Template + context filling for prompt generation
+- Rule-based validation for schema/entity integrity
 
 
 ## 6) Common Tasks
 
-### 6.1 Добавить новый предмет (например новое оружие)
-1. Добавьте dataclass (если нужен новый тип) в `model/items/`.
-2. Добавьте экземпляры в соответствующий справочник в `model/objects/objects.py`.
-3. Убедитесь, что промпты/контекст знают, как сериализовать и перечислять эти сущности.
+### 6.1 Add a new item, character, enemy, or location
+1. Add or update the relevant dataclass/model if needed.
+2. Add the instance to the appropriate catalog module in `model/objects/`.
+3. Update any generator or prompt context code that serializes the catalog.
+4. Update validation rules so the new entity is considered valid.
+5. If the entity should appear in prompts, add it to the prompt-facing game context.
 
-### 6.2 Добавить/изменить промпт
-1. Создайте/отредактируйте файл в `resources/prompts/<name>.txt`.
-2. Проверьте загрузку через:
+### 6.2 Add or edit a prompt
+1. Edit or create a file in `resources/prompts/<name>.txt`.
+2. Load it through `prompt/generator/prompt_generator.py` or the existing smoke-test scripts.
+3. Confirm all placeholders have matching context keys.
+4. If the prompt format changes, update the YAML examples in `resources/quest_yamls/` and the formal validators.
 
-```bash
-python -m view.context_test
-```
+### 6.3 Generate a quest end-to-end
+1. Create or update the prompt template.
+2. Build the game state through `model/game/state/game_state.py`.
+3. Use `experiment/single_generation.py` as the orchestration entry point.
+4. Save the parsed result under `results/generated/`.
+5. Validate the generated YAML with the formal validators.
 
-3. Если промпт параметризуется (`{player}`, `{game}` …), убедитесь, что генерация контекста реально их подставляет (**сейчас `fill_context()` заглушка**).
+### 6.4 Add a new provider or model
+1. Add the provider credentials to `llm/providers.py`.
+2. Implement or extend the LangChain adapter in `llm/langchain/model_handlers.py`.
+3. Implement or extend the DeepEval adapter in `llm/deepeval/model_handlers.py` if judge support is needed.
+4. Check base URL formatting and authentication headers.
+5. Verify the model works in both prompt generation and evaluation flows if applicable.
 
-### 6.3 Запустить оценку judge-моделей и получить CSV
-1. Создайте `.env` (он игнорируется git’ом) и добавьте:
-
-```env
-PROXY_API_KEY=...
-```
-
-2. Запустите:
-
-```bash
-python -m view.g_eval_test
-```
-
-3. Результат: `results/results.csv`.
-
-### 6.4 Загрузить ресурс безопасно
-Используйте `ResourceLoader.load_text("prompts/...")`. Не используйте прямой `open()` для ресурсов, если важна защита от path traversal.
+### 6.5 Load a resource safely
+Use `core.resource_loader.ResourceLoader.load_text(...)` instead of plain `open()` when reading prompt or schema files. This prevents path traversal outside `resources/`.
 
 
 ## 7) Troubleshooting
 
-### `FileNotFoundError` при загрузке промпта
-- Проверьте путь относительно `resources/`.
-- Пример корректного вызова:
-  - `ResourceLoader.load_text("prompts/automata_v1.txt")`
+### `KeyError: 'PROXY_API_KEY'`
+- `llm/providers.py` and `tests/g_eval_test.py` read this variable directly from the environment.
+- Export the variable before importing those modules or running the scripts.
+- If you use `.env`, ensure `python-dotenv` is installed and loaded early enough.
 
-### `ValueError: Недопустимый путь`
-- `ResourceLoader` блокирует пути, выходящие за `resources/`.
-- Убедитесь, что вы не передаёте `../` или абсолютные пути.
+### `FileNotFoundError` when loading prompts or schemas
+- Check the path relative to `resources/`.
+- Confirm the filename spelling, especially for assets like `static_charatcers.txt`.
+- Remember that `ResourceLoader` deliberately blocks `..` traversal.
 
-### Ошибка `KeyError: 'PROXY_API_KEY'`
-- В `view/g_eval_test.py` переменная читается как `os.environ["PROXY_API_KEY"]`.
-- Добавьте переменную в окружение или `.env` (и убедитесь, что `python-dotenv` установлен).
+### Generated YAML fails to parse
+- Make sure the model returns valid YAML, ideally fenced with ```yaml.
+- Check `prompt/parser/result.py:LlmResult.extract_yaml_content()` and the prompt instructions.
+- Verify that the schema file under `resources/quest_yamls/` matches the prompt.
 
-### Сетевые ошибки / 401 / 403 / timeouts при `g_eval_test.py`
-- Проверьте ключ, base_url’ы ProxyAPI и доступность сети.
-- Для Gemini HTTP адаптера: проверьте, что endpoint ожидает заголовок `x-goog-api-key`.
+### Validation fails because of unknown entities
+- Validation checks exact names against the catalogs.
+- Update `model/objects/` if you added a new item, enemy, or character.
+- Verify there are no typos or mismatched aliases in the generated YAML.
 
-### Пустой/неожиданный промпт из `context/prompt_generator.py`
-- На текущий момент это ожидаемо: `fill_context()` возвращает пустую строку, а `generate_prompt()` не вставляет заполненный промпт.
-- Нужна реализация (см. раздел “нуждается в проверке”).
+### LLM requests fail with 401/403/404/timeouts
+- Check `PROXY_API_KEY` and the provider base URL.
+- Confirm the model name is valid for the provider.
+- Review the adapter base URL formatting in `llm/langchain/model_handlers.py` and `llm/deepeval/model_handlers.py` if the endpoint looks wrong.
+
+### Prompt generation looks empty or incomplete
+- Inspect `generation/context/quest_context_generator.py` to ensure all required keys are populated.
+- Verify the prompt template file exists in `resources/prompts/`.
+- Confirm the prompt parser is not stripping useful content unexpectedly.
 
 
 ## 8) References
 
-- DeepEval: https://docs.confident-ai.com/ (проверьте актуальный URL для `deepeval`)
+- DeepEval docs: https://docs.confident-ai.com/
 - OpenAI Python SDK: https://github.com/openai/openai-python
-- LangChain Core prompts: https://python.langchain.com/docs/modules/model_io/prompts/
-- ProxyAPI (используется в коде): **нуждается в ссылке/проверке**
-
+- LangChain prompt docs: https://python.langchain.com/docs/concepts/prompt_templates/
+- PyYAML: https://pyyaml.org/
+- requests: https://requests.readthedocs.io/
+- ProxyAPI: **needs verification**
 
 ---
 
-## TODO / Needs verification (быстрый чеклист)
-- [ ] Добавить `requirements.txt` или `pyproject.toml` с зафиксированными зависимостями.
-- [ ] Реализовать `context/context_generator.py` или удалить, если не нужен.
-- [ ] Починить `context/prompt_generator.py` (f-string для имени промпта + реальная подстановка контекста).
-- [ ] Добавить минимальные автоматические тесты (`pytest`).
-- [ ] Документировать формат `{game}` и `{quest_format}` (где хранится схема YAML квеста).
+## TODO / Needs verification
+- [ ] Add `requirements.txt` or `pyproject.toml` with pinned dependencies.
+- [ ] Add a formal `pytest` suite.
+- [ ] Verify whether `resources/prompts/static_charatcers.txt` is intentionally misspelled.
+- [ ] Review the `llm/*` base URL formatting for each provider.
+- [ ] Decide whether `validation/llm_based/` should remain empty or be implemented.
+- [ ] Document the exact YAML schema for each quest type.
