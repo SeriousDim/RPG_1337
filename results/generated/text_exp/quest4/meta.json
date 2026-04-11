@@ -1,0 +1,48 @@
+{
+    "content": "```yaml\nquest:\n  parts:\n    resource_to_deliver:\n      dialogs:\n        - speaker: \"Гаррик Кузнец\"\n          remark: \"Слушай внимательно, мне нужен простой, но крепкий материал.\"\n        - speaker: \"Гаррик Кузнец\"\n          remark: \"Принеси мне Уголь из Одуванчиковой Поляны, он подходит для моей плавильни.\"\n        - speaker: \"Гаррик Кузнец\"\n          remark: \"Для новичка это будет хорошая проверка и не потребует сложного инструмента.\"\n        - speaker: \"Гаррик Кузнец\"\n          remark: \"Если справишься, я отплачу тебе оружием получше твоего нынешнего.\"\n        - speaker: \"Гаррик Кузнец\"\n          remark: \"Нужно ровно 3 куска Угля, не меньше.\"\n      character: \"Гаррик Кузнец\"\n      resource: \"Уголь\"\n      amount: 3\n\n    enemy_to_face:\n      dialogs:\n        - speaker: \"Гоблин-вор\"\n          remark: \"Ха! Слишком много руды носишь для такого слабого бойца!\"\n        - speaker: \"Гоблин-вор\"\n          remark: \"Отдай уголь, и, может быть, я тебя не трону... хотя, нет, всё равно трону.\"\n        - speaker: \"Гоблин-вор\"\n          remark: \"Не вздумай бежать через поляну!\"\n        - speaker: \"Гоблин-вор\"\n          remark: \"Твой деревянный меч мне даже нравится — сейчас проверим, на что он годится.\"\n        - speaker: \"Гоблин-вор\"\n          remark: \"Сначала я заберу добычу, а потом займусь тобой.\"\n      enemy: \"Гоблин-вор\"\n      amount: 1\n\n    destination:\n      dialogs:\n        - speaker: \"Гаррик Кузнец\"\n          remark: \"Ты вернулся вовремя.\"\n        - speaker: \"Гаррик Кузнец\"\n          remark: \"Покажи уголь, я сразу увижу, годится ли он для работы.\"\n        - speaker: \"Гаррик Кузнец\"\n          remark: \"Да, это тот самый материал, что мне был нужен.\"\n        - speaker: \"Гаррик Кузнец\"\n          remark: \"Ты заслужил награду за старание и за то, что не бросил дело на полпути.\"\n        - speaker: \"Гаррик Кузнец\"\n          remark: \"Забирай Каменный меч — он послужит тебе куда лучше.\"\n      character_to_deliver: \"Гаррик Кузнец\"\n\n  objective_description: \"Добудь 3 куска Угля и доставь их Гаррику Кузнецу в Королевской столице.\"\n\n  reward:\n    item_name: \"Каменный меч\"\n\n  explanation:\n    resource_to_deliver:\n      dialogs: \"Диалоги заданы с Гарриком Кузнецом, который находится в Королевской столице и принимает Уголь. Количество выбрано 3, чтобы квест был посилен игроку 1 уровня с деревянным мечом и соответствовал доступному ресурсу ранга 1.\"\n      character: \"Гаррик Кузнец\"\n      resource: \"Уголь\"\n      amount: \"3\"\n\n    enemy_to_face:\n      dialogs: \"После добычи ресурса игрок встречает Гоблина-ворa. Диалоги подчёркивают попытку отнять добычу и создают короткое боевое препятствие, при этом число реплик соответствует требованию 5.\"\n      enemy: \"Гоблин-вор\"\n      amount: \"1\"\n\n    destination:\n      dialogs: \"Доставка возвращает игрока к тому же персонажу-заказчику, но в этой части квеста он выступает как получатель ресурса. Диалоги содержат подтверждение сдачи задания и выдачу награды, а число реплик снова соблюдает ограничение.\"\n      character_to_deliver: \"Гаррик Кузнец\"\n```",
+    "additional_kwargs": {
+        "refusal": null
+    },
+    "response_metadata": {
+        "token_usage": {
+            "completion_tokens": 889,
+            "prompt_tokens": 9070,
+            "total_tokens": 9959,
+            "completion_tokens_details": {
+                "accepted_prediction_tokens": 0,
+                "audio_tokens": 0,
+                "reasoning_tokens": 0,
+                "rejected_prediction_tokens": 0
+            },
+            "prompt_tokens_details": {
+                "audio_tokens": 0,
+                "cached_tokens": 8960
+            }
+        },
+        "model_provider": "openai",
+        "model_name": "gpt-5.4-mini-2026-03-17",
+        "system_fingerprint": null,
+        "id": "chatcmpl-DTArylpfZp2sqTLCu0lXxOcEEdAHb",
+        "service_tier": "default",
+        "finish_reason": "stop",
+        "logprobs": null
+    },
+    "type": "ai",
+    "name": null,
+    "id": "lc_run--019d78a6-6724-7e03-9e6a-693b6a465016-0",
+    "tool_calls": [],
+    "invalid_tool_calls": [],
+    "usage_metadata": {
+        "input_tokens": 9070,
+        "output_tokens": 889,
+        "total_tokens": 9959,
+        "input_token_details": {
+            "audio": 0,
+            "cache_read": 8960
+        },
+        "output_token_details": {
+            "audio": 0,
+            "reasoning": 0
+        }
+    }
+}
