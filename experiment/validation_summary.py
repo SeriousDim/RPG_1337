@@ -1,7 +1,12 @@
 import json
 from pathlib import Path
 
-from experiment.formal_validator import ValidationResult, ValidationStatus
+from experiment.formal_validator import (
+    VALIDATION_EMOJI_BY_STATUS,
+    ValidationResult,
+    ValidationStatus,
+)
+
 
 
 class ValidationSummary:
@@ -22,19 +27,24 @@ class ValidationSummary:
 
         return sorted(subfolder_paths)
 
-    def generate_summary(self, directory: str | Path):
+    def generate_summary(self, directory: str | Path) -> None:
         base_path = Path(directory)
         subfolder_paths = self.get_subfolder_paths(base_path)
 
-        validation_results_groups: list[list[ValidationResult]] = []
+        validation_results_groups: list[tuple[str, list[ValidationResult]]] = []
         for subfolder_path in subfolder_paths:
             json_files = sorted(subfolder_path.glob("*.json"))
             if not json_files:
                 continue
 
-            validation_results_groups.append(self._load_validation_results_from_json(json_files[0]))
+            validation_results_groups.append(
+                (subfolder_path.name, self._load_validation_results_from_json(json_files[0]))
+            )
 
-        self.generate(validation_results_groups)
+        summary_markdown = self.generate(validation_results_groups)
+        self.save_summary(base_path, summary_markdown)
+
+
 
     def _load_validation_results_from_json(self, json_path: Path) -> list[ValidationResult]:
         data = json.loads(json_path.read_text(encoding="utf-8"))
@@ -57,6 +67,95 @@ class ValidationSummary:
 
         return validation_results
 
-    def generate(self, validation_results_groups: list[list[ValidationResult]]) -> None:
-        pass
+    def generate(self, validation_results_groups: list[tuple[str, list[ValidationResult]]]) -> str:
+        if not validation_results_groups:
+            return "|   | Успешно | Провал | Ошибка |\n| --- | --- | --- | --- |\n"
+
+        folder_names = [folder_name for folder_name, _ in validation_results_groups]
+        validation_names: list[str] = []
+        seen_validation_names: set[str] = set()
+        results_by_folder: list[dict[str, ValidationResult]] = []
+
+        for _, validation_results in validation_results_groups:
+            folder_results: dict[str, ValidationResult] = {}
+            for validation_result in validation_results:
+                folder_results[validation_result.validation] = validation_result
+                if validation_result.validation not in seen_validation_names:
+                    seen_validation_names.add(validation_result.validation)
+                    validation_names.append(validation_result.validation)
+            results_by_folder.append(folder_results)
+
+        lines = [
+            "|   | " + " | ".join(folder_names) + " | Успешно | Провал | Ошибка |",
+            "| --- | " + " | ".join(["---"] * len(folder_names)) + " | --- | --- | --- |",
+        ]
+
+        for validation_name in validation_names:
+            row_cells = [validation_name]
+            success_count = 0
+            failure_count = 0
+            error_count = 0
+
+            for folder_results in results_by_folder:
+                validation_result = folder_results.get(validation_name)
+                if validation_result is None:
+                    row_cells.append("")
+                    continue
+
+                row_cells.append(VALIDATION_EMOJI_BY_STATUS[validation_result.result])
+                if validation_result.result == ValidationStatus.SUCCESS:
+                    success_count += 1
+                elif validation_result.result == ValidationStatus.FAILURE:
+                    failure_count += 1
+                else:
+                    error_count += 1
+
+            total_folders = len(folder_names)
+            row_cells.extend(
+                [
+                    self._format_ratio(success_count, total_folders),
+                    self._format_ratio(failure_count, total_folders),
+                    self._format_ratio(error_count, total_folders),
+                ]
+            )
+            lines.append("| " + " | ".join(row_cells) + " |")
+
+        validation_status_rows = [
+            ("Пройдено", ValidationStatus.SUCCESS),
+            ("Не пройдено", ValidationStatus.FAILURE),
+            ("Ошибка", ValidationStatus.ERROR),
+        ]
+
+        for row_title, status in validation_status_rows:
+            row_cells = [row_title]
+            for folder_results in results_by_folder:
+                folder_total = len(folder_results)
+                status_count = sum(1 for result in folder_results.values() if result.result == status)
+                row_cells.append(self._format_ratio(status_count, folder_total))
+
+            row_cells.extend(["", "", ""])
+            lines.append("| " + " | ".join(row_cells) + " |")
+
+        return "\n".join(lines) + "\n"
+
+    def save_summary(self, directory: str | Path, summary_markdown: str) -> Path:
+        base_path = Path(directory)
+        summary_path = base_path / "summary.md"
+        summary_path.parent.mkdir(parents=True, exist_ok=True)
+        summary_path.write_text(summary_markdown, encoding="utf-8")
+        return summary_path
+
+    def _format_ratio(self, value: int, total: int) -> str:
+        if total == 0:
+            return "0/0 (0%)"
+
+        percent = value / total * 100
+        if float(percent).is_integer():
+            percent_text = f"{int(percent)}%"
+        else:
+            percent_text = f"{percent:.1f}%"
+
+        return f"{value}/{total} ({percent_text})"
+
+
 
