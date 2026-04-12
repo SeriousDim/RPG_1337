@@ -8,7 +8,7 @@ class Statistics:
     damage_received: int = 0
     money_earned: int = 0
     
-    def __dict__(self):
+    def to_dict(self):
         return {
             "enemies_killed": self.enemies_killed,
             "quests_passes": self.quests_passes,

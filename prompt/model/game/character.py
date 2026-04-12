@@ -17,10 +17,10 @@ class Character:
         self.items_can_give_after_quest_finished = [ItemDto(item) for item in character.items_can_give_after_quest_finished]
         self.items_can_be_accepted_for_delivery_or_collection = [ItemDto(item) for item in character.items_can_be_accepted_for_delivery_or_collection]
     
-    def __dict__(self):
+    def to_dict(self):
         return {
             'name': self.name,
-            'location': self.location.__dict__(),
-            'items_can_give_after_quest_finished': [item.__dict__() for item in self.items_can_give_after_quest_finished],
-            'items_can_be_accepted_for_delivery_or_collection': [item.__dict__() for item in self.items_can_be_accepted_for_delivery_or_collection]
+            'location': self.location.to_dict(),
+            'items_can_give_after_quest_finished': [item.to_dict() for item in self.items_can_give_after_quest_finished],
+            'items_can_be_accepted_for_delivery_or_collection': [item.to_dict() for item in self.items_can_be_accepted_for_delivery_or_collection]
         }

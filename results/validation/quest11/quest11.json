@@ -14,14 +14,14 @@
   {
     "validation": "BalanceValidation",
     "description": "Игрок может пройти часть квеста, в которой он встречается с противником (quest.parts.enemy_to_face)",
-    "result": "ошибка",
-    "error": "Traceback (most recent call last):\n  File \"C:\\Projects\\rpg_quest\\experiment\\formal_validator.py\", line 199, in run_validation_list\n    validation_result = validation.validate(quest_content)\n  File \"C:\\Projects\\rpg_quest\\validation\\formal\\enemy\\balance.py\", line 40, in validate\n    current_enemies = [deepcopy(enemy) for i in range(enemy_amount)]\n                       ~~~~~~~~^^^^^^^\n  File \"C:\\Users\\dlyko\\miniconda3\\Lib\\copy.py\", line 163, in deepcopy\n    y = _reconstruct(x, memo, *rv)\n  File \"C:\\Users\\dlyko\\miniconda3\\Lib\\copy.py\", line 260, in _reconstruct\n    state = deepcopy(state, memo)\n  File \"C:\\Users\\dlyko\\miniconda3\\Lib\\copy.py\", line 137, in deepcopy\n    y = copier(x, memo)\n  File \"C:\\Users\\dlyko\\miniconda3\\Lib\\copy.py\", line 222, in _deepcopy_dict\n    y[deepcopy(key, memo)] = deepcopy(value, memo)\n                             ~~~~~~~~^^^^^^^^^^^^^\n  File \"C:\\Users\\dlyko\\miniconda3\\Lib\\copy.py\", line 163, in deepcopy\n    y = _reconstruct(x, memo, *rv)\n  File \"C:\\Users\\dlyko\\miniconda3\\Lib\\copy.py\", line 269, in _reconstruct\n    y.__dict__.update(state)\n    ^^^^^^^^^^^^^^^^^\nAttributeError: 'function' object has no attribute 'update'\n"
+    "result": "успешно",
+    "error": null
   },
   {
     "validation": "PlayerHasAppropriateInstrumentValidation",
     "description": "Игрок должен иметь подходящий по рангу (rank) и по типу (type) инструмент в своем инвентаре для добычи ресурса (quest.parts.resource_to_deliver.resource)",
-    "result": "ошибка",
-    "error": "Traceback (most recent call last):\n  File \"C:\\Projects\\rpg_quest\\experiment\\formal_validator.py\", line 199, in run_validation_list\n    validation_result = validation.validate(quest_content)\n  File \"C:\\Projects\\rpg_quest\\validation\\formal\\delivery\\player_has_appropriate_instrument.py\", line 16, in validate\n    resource = find_any_item_by_name(resource_name)\n  File \"C:\\Projects\\rpg_quest\\model\\objects\\objects.py\", line 96, in find_any_item_by_name\n    filtered = list(filter(lambda i: i.name == name, get_resources()))\n                    ~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nTypeError: 'Resources' object is not iterable\n"
+    "result": "провал",
+    "error": "Для добычи ресурса 'Одуванчик' нужен инструмент 'лопата' ранга не ниже 1, но у игрока лучший доступный ранг равен 0"
   },
   {
     "validation": "RewardIsBetterThanPlayersOneValidation",
@@ -34,6 +34,12 @@
     "description": "Предлагаемая награда (quest.reward.item_name) не должна быть в наличии в инвентаре или в броне игрока",
     "result": "успешно",
     "error": null
+  },
+  {
+    "validation": "CharacterIsSamePlayerInteractedValidation",
+    "description": "Персонаж quest.parts.resource_to_deliver.character совпадает с персонажем, к которому подошел игрок",
+    "result": "ошибка",
+    "error": "Traceback (most recent call last):\n  File \"C:\\Projects\\rpg_quest\\experiment\\formal_validator.py\", line 200, in run_validation_list\n    validation_result = validation.validate(quest_content)\n  File \"C:\\Projects\\rpg_quest\\validation\\formal\\dialogs\\character_is_same_player_interacted.py\", line 14, in validate\n    if character_name != self.interacted_character.name:\n                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAttributeError: 'NoneType' object has no attribute 'name'\n"
   },
   {
     "validation": "CharactersInDifferentLocationsValidation",
@@ -50,8 +56,8 @@
   {
     "validation": "CharacterCanGiveRewardValidation",
     "description": "Персонаж (quest.parts.destination.character_to_deliver) действительно может давать данный предмет (quest.reward.item_name) в качестве награды",
-    "result": "провал",
-    "error": "Персонаж 'Гаррик Кузнец' не может выдать предмет 'Железный меч' в качестве награды"
+    "result": "успешно",
+    "error": null
   },
   {
     "validation": "RemarkValidation",

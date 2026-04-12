@@ -26,10 +26,10 @@ class ItemDto(Item):
         
         self.extra = all_data
     
-    def __dict__(self):
+    def to_dict(self):
         return {
             "name": self.name,
             "type": self.type,
-            "rank": self.rank.__dict__(),
+            "rank": self.rank.to_dict(),
             **self.extra
         }

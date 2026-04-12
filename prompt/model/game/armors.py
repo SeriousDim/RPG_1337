@@ -17,10 +17,10 @@ class Armors:
         self.leggings = [ItemDto(legging) for legging in armors.leggings]
         self.shields = [ItemDto(shield) for shield in armors.shields]
     
-    def __dict__(self):
+    def to_dict(self):
         return {
-            "helmets": [helmet.__dict__() for helmet in self.helmets],
-            "chestplates": [chestplate.__dict__() for chestplate in self.chestplates],
-            "leggings": [legging.__dict__() for legging in self.leggings],
-            "shields": [shield.__dict__() for shield in self.shields]
+            "helmets": [helmet.to_dict() for helmet in self.helmets],
+            "chestplates": [chestplate.to_dict() for chestplate in self.chestplates],
+            "leggings": [legging.to_dict() for legging in self.leggings],
+            "shields": [shield.to_dict() for shield in self.shields]
         }

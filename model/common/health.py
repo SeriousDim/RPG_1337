@@ -6,7 +6,7 @@ class Health:
     current: int
     max: int
     
-    def __dict__(self):
+    def to_dict(self):
         return {
             "current": self.current,
             "max": self.max

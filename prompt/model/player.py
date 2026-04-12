@@ -16,13 +16,13 @@ class Player:
     inventory: list[ItemDto]
     armor: PlayerArmorDto
     
-    def __dict__(self):
+    def to_dict(self):
         return {
-            "level": self.level.__dict__(),
-            "statistics_for_current_session": self.statistics_for_current_session.__dict__(),
-            "health": self.health.__dict__(),
+            "level": self.level.to_dict(),
+            "statistics_for_current_session": self.statistics_for_current_session.to_dict(),
+            "health": self.health.to_dict(),
             # "money": self.money, # деньги пока не используются
-            "inventory": [item.__dict__() for item in self.inventory],
-            "armor": self.armor.__dict__()
+            "inventory": [item.to_dict() for item in self.inventory],
+            "armor": self.armor.to_dict()
         }
 

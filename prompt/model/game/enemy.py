@@ -20,11 +20,11 @@ class Enemy:
         self.damage_per_turn = enemy.damage_per_turn
         self.money_for_killing_this_enemy = enemy.money_for_killing_this_enemy
     
-    def __dict__(self):
+    def to_dict(self):
         return {
             "name": self.name,
-            "rank": self.rank.__dict__(),
-            "health": self.health.__dict__(),
+            "rank": self.rank.to_dict(),
+            "health": self.health.to_dict(),
             "damage_per_turn": self.damage_per_turn,
             # "money_for_killing_this_enemy": self.money_for_killing_this_enemy # деньги пока не используются
         }

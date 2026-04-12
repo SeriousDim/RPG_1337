@@ -1,3 +1,4 @@
+from model.items.instrument import Instrument
 from model.objects.player import INITIAL_HEALTH, INITIAL_MONEY
 from model.common.health import Health
 from model.player.player import Player
@@ -6,7 +7,7 @@ from model.player.player_level import PlayerLevel
 from model.player.statistics import Statistics
 
 from model.items.sword import Sword
-from model.objects.objects import SWORDS
+from model.objects.objects import PICKAXES, SHOVELS, SWORDS
 
 class PlayerGenerator:
 
@@ -27,6 +28,8 @@ class PlayerGenerator:
         )
 
         starter_sword: Sword = SWORDS[0]
+        starter_pickaxe: Instrument = PICKAXES[0]
+        starter_shovel: Instrument = SHOVELS[0]
         armor = PlayerArmor()
 
         return Player(
@@ -34,7 +37,7 @@ class PlayerGenerator:
             statistics_for_current_session=statistics,
             health=health,
             money=INITIAL_MONEY,
-            inventory=[starter_sword],
+            inventory=[starter_sword, starter_pickaxe, starter_shovel],
             armor=armor,
         )
         

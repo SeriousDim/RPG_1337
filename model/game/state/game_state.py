@@ -17,5 +17,5 @@ class GameState:
         self.context = GameObjectsGenerator.create_game_context()
         self.context.already_generated_characters = CHARACTERS
     
-    def __dict__(self):
+    def to_dict(self):
         return asdict(self)

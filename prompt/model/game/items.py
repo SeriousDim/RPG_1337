@@ -19,10 +19,10 @@ class Items:
         self.instruments = [ItemDto(instrument) for instrument in items.instruments]
         self.armor = Armors(items.armor)
     
-    def __dict__(self):
+    def to_dict(self):
         return {
-            "resources": self.resources.__dict__(),
-            "weapons": [weapon.__dict__() for weapon in self.weapons],
-            "instruments": [instrument.__dict__() for instrument in self.instruments],
-            "armor": self.armor.__dict__()
+            "resources": self.resources.to_dict(),
+            "weapons": [weapon.to_dict() for weapon in self.weapons],
+            "instruments": [instrument.to_dict() for instrument in self.instruments],
+            "armor": self.armor.to_dict()
         }

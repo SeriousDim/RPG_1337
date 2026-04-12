@@ -15,11 +15,11 @@ class BufferedLocation:
         self.herb_resource = ItemDto(location.herb_resource)
         self.ore_resource = ItemDto(location.ore_resource)
     
-    def __dict__(self):
+    def to_dict(self):
         return {
             "name": self.name,
-            "herb_resource": self.herb_resource.__dict__(),
-            "ore_resource": self.ore_resource.__dict__()
+            "herb_resource": self.herb_resource.to_dict(),
+            "ore_resource": self.ore_resource.to_dict()
             }
 
 
@@ -32,8 +32,8 @@ class Locations:
         self.primary = locations.primary
         self.buffered = [BufferedLocation(loc) for loc in locations.buffered]
     
-    def __dict__(self):
+    def to_dict(self):
         return {
-            "primary": [loc.__dict__() for loc in self.primary],
-            "buffered": [loc.__dict__() for loc in self.buffered]
+            "primary": [loc.to_dict() for loc in self.primary],
+            "buffered": [loc.to_dict() for loc in self.buffered]
         }

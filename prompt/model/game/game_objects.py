@@ -22,11 +22,11 @@ class GameObjects:
         self.locations = Locations(game_objects.locations)
         self.already_generated_characters = [Character(char) for char in game_objects.already_generated_characters]
     
-    def __dict__(self):
+    def to_dict(self):
         return {
             "setting": self.setting,
-            "items": self.items.__dict__(),
-            "enemies": [enemy.__dict__() for enemy in self.enemies],
-            "locations": self.locations.__dict__(),
-            "already_generated_characters": [char.__dict__() for char in self.already_generated_characters]
+            "items": self.items.to_dict(),
+            "enemies": [enemy.to_dict() for enemy in self.enemies],
+            "locations": self.locations.to_dict(),
+            "already_generated_characters": [char.to_dict() for char in self.already_generated_characters]
         }

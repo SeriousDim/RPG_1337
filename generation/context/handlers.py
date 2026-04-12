@@ -14,7 +14,7 @@ from prompt.mapper.quest_mapper import QuestTypeMapper
 
 @_surround_with_yaml_block
 def _to_yaml(obj, root_name) -> str:
-    return yaml.safe_dump({root_name: obj.__dict__()}, allow_unicode=True)
+    return yaml.safe_dump({root_name: obj.to_dict()}, allow_unicode=True)
 
 
 def handle_player_key(state: GameState) -> Callable[[], str]:

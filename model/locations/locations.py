@@ -7,7 +7,7 @@ from model.items.resource import Resource
 class PrimaryLocation:
     name: str
     
-    def __dict__(self):
+    def to_dict(self):
         return {
             "name": self.name,
         }

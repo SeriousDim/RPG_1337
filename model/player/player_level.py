@@ -20,7 +20,7 @@ class PlayerLevel:
         self.xp_to_next_level = gradation.xp_to_next_level
         self.max_possible_level = get_max_possible_level()
     
-    def __dict__(self):
+    def to_dict(self):
         return {
             "current_level": self.current_level,
             "current_xp": self.current_xp,
