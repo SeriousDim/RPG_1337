@@ -7,7 +7,7 @@ def create_prompt(prompt_name: str):
     prompt_template = find_prompt_template_by_name(prompt_name)
     
     return ChatPromptTemplate.from_messages([
-        ("system", prompt_template)
+        ("human", prompt_template)
     ])
 
 

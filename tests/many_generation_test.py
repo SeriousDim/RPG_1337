@@ -5,7 +5,7 @@ game_state=GameState()
 QUEST_TYPE = 'delivery_v2'
 context = ManyQuestGenerations.build_context(game_state, QUEST_TYPE)
 
-MODEL = 'gemini-2.5-pro'
+MODEL = 'claude-haiku-4-5'
 PROMPT = 'automata_v2'
 quest_gen = ManyQuestGenerations(
     prompt_file_name=PROMPT,
