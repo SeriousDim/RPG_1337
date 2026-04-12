@@ -14,4 +14,9 @@ class PlayerHasNotSuchRewardValidation(AbstractValidation):
         reward = quest[self.REWARD]['item_name']
         player_items = self.player.inventory + self.player.armor.get_all_armors()
         player_items = [armor.name for armor in player_items]
-        return reward not in player_items
+        if reward in player_items:
+            self.raise_validation_error(
+                f"Предлагаемая награда '{reward}' уже есть у игрока в инвентаре или броне"
+            )
+        return True
+

@@ -1,10 +1,10 @@
 # results/generated/text_exp/quest1
-2026-04-12 02:06:58
+2026-04-12 02:46:54
 
 AllQuestKeysExistValidation: ✅
 Структура квеста соответствует заданному формату, все необходимые ключи прописаны
 
-EntitiesExistenceValidation: ❌
+EntitiesExistenceValidation: ✅
 Все упоминаемые сущности в структуре квеста должны существовать в игре
 
 BalanceValidation: ⚠️
@@ -12,9 +12,9 @@ BalanceValidation: ⚠️
 
 ```
 Traceback (most recent call last):
-  File "C:\Projects\rpg_quest\experiment\formal_validator.py", line 197, in run_validation_list
+  File "C:\Projects\rpg_quest\experiment\formal_validator.py", line 199, in run_validation_list
     validation_result = validation.validate(quest_content)
-  File "C:\Projects\rpg_quest\validation\formal\enemy\balance.py", line 36, in validate
+  File "C:\Projects\rpg_quest\validation\formal\enemy\balance.py", line 40, in validate
     current_enemies = [deepcopy(enemy) for i in range(enemy_amount)]
                        ~~~~~~~~^^^^^^^
   File "C:\Users\dlyko\miniconda3\Lib\copy.py", line 163, in deepcopy
@@ -39,7 +39,7 @@ PlayerHasAppropriateInstrumentValidation: ⚠️
 
 ```
 Traceback (most recent call last):
-  File "C:\Projects\rpg_quest\experiment\formal_validator.py", line 197, in run_validation_list
+  File "C:\Projects\rpg_quest\experiment\formal_validator.py", line 199, in run_validation_list
     validation_result = validation.validate(quest_content)
   File "C:\Projects\rpg_quest\validation\formal\delivery\player_has_appropriate_instrument.py", line 16, in validate
     resource = find_any_item_by_name(resource_name)
@@ -58,11 +58,19 @@ PlayerHasNotSuchRewardValidation: ✅
 CharactersInDifferentLocationsValidation: ❌
 Персонажи quest.parts.resource_to_deliver.character и quest.parts.destination.character_to_deliver должны находится в разных локациях
 
+```
+Персонажи 'Гаррик Кузнец' и 'Гаррик Кузнец' находятся в одной локации 'Королевская столица'
+```
+
 ItemIsAcceptableByCharacterValidation: ✅
 Предлагаемый ресурс для добычи (quest.parts.resource_to_deliver.resource) должен приниматься персонажем в quest.parts.destination.character_to_deliver
 
 CharacterCanGiveRewardValidation: ❌
 Персонаж (quest.parts.destination.character_to_deliver) действительно может давать данный предмет (quest.reward.item_name) в качестве награды
+
+```
+Персонаж 'Гаррик Кузнец' не может выдать предмет 'Железный меч' в качестве награды
+```
 
 RemarkValidation: ✅
 Генерируется заданный диапазон (от 5 до 10) реплик (dialogs) для каждой из частей (quest.parts)

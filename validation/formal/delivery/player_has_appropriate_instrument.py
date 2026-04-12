@@ -15,22 +15,33 @@ class PlayerHasAppropriateInstrumentValidation(AbstractValidation):
         resource_name = quest['parts']['resource_to_deliver']['resource']
         resource = find_any_item_by_name(resource_name)
         
-        if isinstance(resource, Resource):
-            min_instrument_level = resource.min_instrument_rank
-            resource_type = resource.type
-            
-            if resource_type == 'трава':
-                best_instrument_rank = self.find_best_instrument_rank(self.player.inventory, 'лопата')
-                return best_instrument_rank >= min_instrument_level
-            elif resource_type == 'руда':
-                best_instrument_rank = self.find_best_instrument_rank(self.player.inventory, 'кирка')
-                return best_instrument_rank >= min_instrument_level
-            return False
+        if not isinstance(resource, Resource):
+            self.raise_validation_error(f"Ресурс '{resource_name}' не найден в каталоге ресурсов")
+
+        min_instrument_level = resource.min_instrument_rank
+        resource_type = resource.type
+        
+        if resource_type == 'трава':
+            required_instrument = 'лопата'
+        elif resource_type == 'руда':
+            required_instrument = 'кирка'
         else:
-            return False
+            self.raise_validation_error(
+                f"Для ресурса '{resource_name}' указан неподдерживаемый тип '{resource_type}'"
+            )
+
+        best_instrument_rank = self.find_best_instrument_rank(self.player.inventory, required_instrument)
+        if best_instrument_rank < min_instrument_level:
+            self.raise_validation_error(
+                f"Для добычи ресурса '{resource_name}' нужен инструмент '{required_instrument}' ранга не ниже {min_instrument_level}, "
+                f"но у игрока лучший доступный ранг равен {best_instrument_rank}"
+            )
+        
+        return True
     
     def find_best_instrument_rank(self, instruments, type):
         filtered_by_type = list(filter(lambda i: i.type == type, instruments))
         if len(filtered_by_type) == 0:
             return 0
         return max(map(lambda i: i.rank, filtered_by_type))
+

@@ -14,4 +14,10 @@ class CharacterCanGiveRewardValidation(AbstractValidation):
         character_items = find_character_by_name(character_name).items_can_give_after_quest_finished
         character_items = [item.name for item in character_items]
         
-        return reward_name in character_items
+        if reward_name not in character_items:
+            self.raise_validation_error(
+                f"Персонаж '{character_name}' не может выдать предмет '{reward_name}' в качестве награды"
+            )
+        
+        return True
+

@@ -1,5 +1,7 @@
 from abc import ABC, abstractmethod
 
+from validation.formal.base.validation_error import QuestValidationError
+
 
 class AbstractValidation(ABC):
     description: str
@@ -15,8 +17,14 @@ class AbstractValidation(ABC):
     def validate(self, quest: dict) -> bool:
         pass
     
-    def validate_name(self, field, names) -> bool:
+    def raise_validation_error(self, message: str) -> None:
+        raise QuestValidationError(message)
+    
+    def validate_name(self, field, names, message: str | None = None) -> bool:
         if field not in names:
-            return False
+            if message is None:
+                message = f"Значение '{field}' не найдено среди допустимых сущностей.\nДопустимые сущности: {names}"
+            self.raise_validation_error(message)
         
         return True
+

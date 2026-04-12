@@ -11,4 +11,9 @@ class CharacterIsSamePlayerInteractedValidation(AbstractValidation):
     
     def validate(self, quest: dict) -> bool:
         character_name = quest['parts']['resource_to_deliver']['character']
-        return character_name == self.interacted_character.name
+        if character_name != self.interacted_character.name:
+            self.raise_validation_error(
+                f"Ожидался персонаж '{self.interacted_character.name}', но в quest.parts.resource_to_deliver.character указан '{character_name}'"
+            )
+        return True
+

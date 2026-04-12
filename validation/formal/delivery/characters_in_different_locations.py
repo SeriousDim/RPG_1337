@@ -12,4 +12,10 @@ class CharactersInDifferentLocationsValidation(AbstractValidation):
         character_a = find_character_by_name(character_a_name)
         character_b = find_character_by_name(character_b_name)
         
-        return character_a.location.name != character_b.location.name
+        if character_a.location.name == character_b.location.name:
+            self.raise_validation_error(
+                f"Персонажи '{character_a_name}' и '{character_b_name}' находятся в одной локации '{character_a.location.name}'"
+            )
+        
+        return True
+

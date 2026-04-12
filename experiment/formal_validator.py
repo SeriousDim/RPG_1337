@@ -1,3 +1,4 @@
+from copy import deepcopy
 from dataclasses import dataclass
 from datetime import datetime
 from enum import Enum
@@ -10,6 +11,8 @@ import yaml
 
 
 from validation.formal.base.abstract_validation import AbstractValidation
+from validation.formal.base.validation_error import QuestValidationError
+
 
 from validation.formal.all_quest_keys_exist import AllQuestKeysExistValidation
 from validation.formal.delivery.characters_in_different_locations import CharactersInDifferentLocationsValidation
@@ -125,8 +128,8 @@ class FormalQuestValidator:
         folder_path = content_yaml_path.parent.as_posix()
         timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
-        report_dir = Path("results") / "validation" / experiment_name / "report"
-        json_dir = Path("results") / "validation" / experiment_name / "json"
+        report_dir = Path("results") / "validation" / experiment_name
+        json_dir = Path("results") / "validation" / experiment_name
         report_dir.mkdir(parents=True, exist_ok=True)
         json_dir.mkdir(parents=True, exist_ok=True)
 
@@ -158,7 +161,7 @@ class FormalQuestValidator:
             if validation_result.description:
                 lines.append(validation_result.description)
 
-            if validation_result.result == ValidationStatus.ERROR and validation_result.error:
+            if validation_result.result in (ValidationStatus.FAILURE, ValidationStatus.ERROR) and validation_result.error:
                 lines.append("")
                 lines.append("```")
                 lines.append(validation_result.error.rstrip())
@@ -173,15 +176,15 @@ class FormalQuestValidator:
         return [
             AllQuestKeysExistValidation(),
             EntitiesExistenceValidation(),
-            BalanceValidation(player),
+            BalanceValidation(deepcopy(player)),
         ]
 
     def create_other_validations(self, player: Any, interacted_character: Any) -> list[AbstractValidation]:
         return [
-            PlayerHasAppropriateInstrumentValidation(player),
-            RewardIsBetterThanPlayersOneValidation(player),
-            PlayerHasNotSuchRewardValidation(player),
-            # CharacterIsSamePlayerInteractedValidation(interacted_character),
+            PlayerHasAppropriateInstrumentValidation(deepcopy(player)),
+            RewardIsBetterThanPlayersOneValidation(deepcopy(player)),
+            PlayerHasNotSuchRewardValidation(deepcopy(player)),
+            CharacterIsSamePlayerInteractedValidation(interacted_character),
             CharactersInDifferentLocationsValidation(),
             ItemIsAcceptableByCharacterValidation(),
             CharacterCanGiveRewardValidation(),
@@ -197,9 +200,13 @@ class FormalQuestValidator:
                 validation_result = validation.validate(quest_content)
                 result = ValidationStatus.SUCCESS if validation_result else ValidationStatus.FAILURE
                 error = None
+            except QuestValidationError as exc:
+                result = ValidationStatus.FAILURE
+                error = str(exc)
             except Exception:
                 result = ValidationStatus.ERROR
                 error = traceback.format_exc()
+
 
             results.append(
                 ValidationResult(

@@ -20,4 +20,9 @@ class RewardIsBetterThanPlayersOneValidation(AbstractValidation):
             return True
         
         max_rank = max(map(lambda i: i.rank, player_items))
-        return reward.rank > max_rank
+        if reward.rank <= max_rank:
+            self.raise_validation_error(
+                f"Награда '{reward.name}' ранга {reward.rank} должна быть лучше предметов игрока того же типа. Максимальный ранг у игрока: {max_rank}"
+            )
+        return True
+

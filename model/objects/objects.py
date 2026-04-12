@@ -93,7 +93,7 @@ def find_any_item_by_name(name: str) -> Item:
     if len(filtered) > 0:
         return filtered[0]
     
-    filtered = list(filter(lambda i: i.name == name, get_resources()))
+    filtered = list(filter(lambda i: i.name == name, HERBS + ORES))
     if len(filtered) > 0:
         return filtered[0]
     

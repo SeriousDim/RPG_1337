@@ -1,9 +1,10 @@
-from model.objects.enemies import find_enemy_by_name
-from model.player.player import Player
+from copy import deepcopy
+
 from model.items.sword import Sword
 from model.mobs.enemy import Enemy
+from model.objects.enemies import find_enemy_by_name
+from model.player.player import Player
 from validation.formal.base.abstract_validation import AbstractValidation
-from copy import deepcopy
 
 
 class BalanceValidation(AbstractValidation):
@@ -19,7 +20,9 @@ class BalanceValidation(AbstractValidation):
         enemy = find_enemy_by_name(enemy_name)
         
         if enemy_amount <= 0:
-            return False
+            self.raise_validation_error(
+                f"Количество врагов в части enemy_to_face должно быть больше 0, получено: {enemy_amount}"
+            )
 
         # Находим лучший меч игрока по рангу
         best_sword = None
@@ -29,8 +32,9 @@ class BalanceValidation(AbstractValidation):
                     best_sword = item
 
         if best_sword is None:
-            # Если меча нет, игрок не может победить врагов
-            return False
+            self.raise_validation_error(
+                "Игрок не может пройти часть enemy_to_face: в инвентаре отсутствует меч"
+            )
 
         # Создаем копии врагов, чтобы не изменять оригинальные объекты
         current_enemies = [deepcopy(enemy) for i in range(enemy_amount)]
@@ -91,7 +95,10 @@ class BalanceValidation(AbstractValidation):
 
             # Проверяем, жив ли игрок
             if self.player.health.current <= 0:
-                return False
+                self.raise_validation_error(
+                    f"Игрок не выдерживает бой с '{enemy_name}' в количестве {enemy_amount}"
+                )
 
         # Если мы дошли до сюда, значит игрок победил
         return True
+

@@ -13,8 +13,13 @@ class RemarkValidation(AbstractValidation):
             part = parts[part_key]
             dialogs = part['dialogs']
             if len(dialogs) < self.MIN_REMARKS:
-                return False
+                self.raise_validation_error(
+                    f"В части '{part_key}' слишком мало реплик: {len(dialogs)}. Минимум: {self.MIN_REMARKS}"
+                )
             elif len(dialogs) > self.MAX_REMARKS:
-                return False
+                self.raise_validation_error(
+                    f"В части '{part_key}' слишком много реплик: {len(dialogs)}. Максимум: {self.MAX_REMARKS}"
+                )
         
         return True
+
