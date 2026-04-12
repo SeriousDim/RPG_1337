@@ -128,8 +128,8 @@ class FormalQuestValidator:
         folder_path = content_yaml_path.parent.as_posix()
         timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
-        report_dir = Path("results") / "validation" / experiment_name
-        json_dir = Path("results") / "validation" / experiment_name
+        report_dir = Path("results") / "validation" / base_directory.name / experiment_name
+        json_dir = Path("results") / "validation" / base_directory.name / experiment_name
         report_dir.mkdir(parents=True, exist_ok=True)
         json_dir.mkdir(parents=True, exist_ok=True)
 

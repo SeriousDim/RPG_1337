@@ -13,7 +13,7 @@ quest_gen = SingleQuestGeneration(
     prompt_file_name="automata_v2",
     game_state=GameState(),
     provider="proxy_api",
-    model="gpt-5.4-mini",
+    model="gemini-2.5-pro",
     quest_file_name='delivery_v2',
     path_to_save='single/test'
 )
