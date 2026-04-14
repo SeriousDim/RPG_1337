@@ -17,8 +17,15 @@ def create_path_to_save(model_name: str) -> str:
 def parse_result(message: AIMessage) -> LlmResult:
     meta = message.model_dump()
     
+    model_name = meta['response_metadata']['model_name']
+    
+    if model_name.startswith('gemini'):
+        content = message.content[0]['text']
+    else:
+        content = message.content
+    
     return LlmResult(
-        content=replace_special_symbols(message.content),
+        content=replace_special_symbols(content),
         meta=meta,
         path_to_save=create_path_to_save(message.response_metadata['model_name'])
     )

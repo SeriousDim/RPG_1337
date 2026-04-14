@@ -1,0 +1,68 @@
+[
+  {
+    "validation": "AllQuestKeysExistValidation",
+    "description": "Структура квеста соответствует заданному формату, все необходимые ключи прописаны",
+    "result": "успешно",
+    "error": null
+  },
+  {
+    "validation": "EntitiesExistenceValidation",
+    "description": "Все упоминаемые сущности в структуре квеста должны существовать в игре",
+    "result": "провал",
+    "error": "В dialogs[1] указан неизвестный персонаж 'Игрок'"
+  },
+  {
+    "validation": "BalanceValidation",
+    "description": "Игрок может пройти часть квеста, в которой он встречается с противником (quest.parts.enemy_to_face)",
+    "result": "успешно",
+    "error": null
+  },
+  {
+    "validation": "PlayerHasAppropriateInstrumentValidation",
+    "description": "Игрок должен иметь подходящий по рангу (rank) и по типу (type) инструмент в своем инвентаре для добычи ресурса (quest.parts.resource_to_deliver.resource)",
+    "result": "успешно",
+    "error": null
+  },
+  {
+    "validation": "RewardIsBetterThanPlayersOneValidation",
+    "description": "Предлагаемая награда (quest.reward.item_name) должна быть лучше по рангу (rank), чем предметы такого же типа (type), которые есть у игрока в данный момент в его инвентаре или в броне",
+    "result": "успешно",
+    "error": null
+  },
+  {
+    "validation": "PlayerHasNotSuchRewardValidation",
+    "description": "Предлагаемая награда (quest.reward.item_name) не должна быть в наличии в инвентаре или в броне игрока",
+    "result": "успешно",
+    "error": null
+  },
+  {
+    "validation": "CharacterIsSamePlayerInteractedValidation",
+    "description": "Персонаж quest.parts.resource_to_deliver.character совпадает с персонажем, к которому подошел игрок",
+    "result": "ошибка",
+    "error": "Traceback (most recent call last):\n  File \"C:\\Projects\\rpg_quest\\experiment\\formal_validator.py\", line 200, in run_validation_list\n    validation_result = validation.validate(quest_content)\n  File \"C:\\Projects\\rpg_quest\\validation\\formal\\dialogs\\character_is_same_player_interacted.py\", line 14, in validate\n    if character_name != self.interacted_character.name:\n                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAttributeError: 'NoneType' object has no attribute 'name'\n"
+  },
+  {
+    "validation": "CharactersInDifferentLocationsValidation",
+    "description": "Персонажи quest.parts.resource_to_deliver.character и quest.parts.destination.character_to_deliver должны находится в разных локациях",
+    "result": "успешно",
+    "error": null
+  },
+  {
+    "validation": "ItemIsAcceptableByCharacterValidation",
+    "description": "Предлагаемый ресурс для добычи (quest.parts.resource_to_deliver.resource) должен приниматься персонажем в quest.parts.destination.character_to_deliver",
+    "result": "провал",
+    "error": "Персонаж 'Лира Лекарь' не принимает ресурс 'Уголь' в качестве награды или добычи"
+  },
+  {
+    "validation": "CharacterCanGiveRewardValidation",
+    "description": "Персонаж (quest.parts.destination.character_to_deliver) действительно может давать данный предмет (quest.reward.item_name) в качестве награды",
+    "result": "успешно",
+    "error": null
+  },
+  {
+    "validation": "RemarkValidation",
+    "description": "Генерируется заданный диапазон (от 5 до 10) реплик (dialogs) для каждой из частей (quest.parts)",
+    "result": "успешно",
+    "error": null
+  }
+]

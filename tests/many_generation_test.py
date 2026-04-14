@@ -5,8 +5,8 @@ game_state=GameState()
 QUEST_TYPE = 'delivery_v2'
 context = ManyQuestGenerations.build_context(game_state, QUEST_TYPE)
 
-MODEL = 'claude-haiku-4-5'
-PROMPT = 'automata_v2'
+MODEL = 'deepseek/deepseek-v3.2'
+PROMPT = 'automata_v1'
 quest_gen = ManyQuestGenerations(
     prompt_file_name=PROMPT,
     provider="proxy_api",
