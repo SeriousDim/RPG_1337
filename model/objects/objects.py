@@ -61,6 +61,13 @@ MAX_RANKS = {
 }
 
 
+INSTRUMENT_MAPPING = {
+    'лопата': 'лопатой можно добывать траву',
+    'кирка': 'киркой можно добывать руду',
+    'оружие': 'оружием можно устранять противников'
+}
+
+
 def get_instruments() -> list[Instrument]:
     return SHOVELS + PICKAXES
 

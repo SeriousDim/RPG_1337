@@ -11,5 +11,12 @@ def create_prompt(prompt_name: str):
     ])
 
 
+def prompt_from_file(file_name: str):
+    with open(file_name, "r") as file:
+        return ChatPromptTemplate.from_messages([
+            ("human", file.read())
+        ])
+
+
 def find_prompt_template_by_name(prompt_name: str):
     return ResourceLoader.load_text(f"prompts/{prompt_name}.txt")
