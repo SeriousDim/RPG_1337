@@ -1,9 +1,60 @@
+from pathlib import Path
+
 import streamlit as st
 
 from view.classical_user_study.criteria import CRITERIA
+from view.classical_user_study.suggest import get_leaf_subfolders
+from view.read import read_prompt_and_generated_quest
+
+
+def save_current_answers(quest_path: Path, answers: dict[str, int]) -> None:
+    pass
+
+
+def get_current_answers() -> dict[str, int]:
+    return {
+        title: st.session_state[f"criterion_{idx}"]
+        for idx, (title, _description, _scale) in enumerate(CRITERIA, start=1)
+    }
+
+
+def handle_next_click(quest_path: Path) -> None:
+    answers = get_current_answers()
+    save_current_answers(quest_path, answers)
+    st.session_state["current_selection_position"] += 1
+    st.rerun()
+
 
 def render_classical_study() -> None:
+
+    quests_root = Path(__file__).resolve().parents[1] / "resources" / "quests"
+    leaf_subfolders = get_leaf_subfolders(quests_root)
+
+    st.session_state.setdefault("current_selection_position", 0)
+
+    selection_indices = st.session_state.get("selection_indices", [])
+    current_selection_position = st.session_state["current_selection_position"]
+
+    if selection_indices and current_selection_position >= len(selection_indices):
+        st.toast("Больше квестов нет, спасибо за участие")
+        st.session_state["prompt_context_text"] = ""
+        st.session_state["generated_quest_text"] = ""
+        return
+
+        selected_quest_path: Path | None = None
+
+    if selection_indices and leaf_subfolders:
+        selected_index = selection_indices[current_selection_position]
+        selected_quest_path = Path(leaf_subfolders[selected_index]) / "content.yaml"
+        prompt_text, generated_quest_text = read_prompt_and_generated_quest(selected_quest_path)
+
+        st.session_state["prompt_context_text"] = prompt_text
+        st.session_state["generated_quest_text"] = generated_quest_text
+
+
+
     st.markdown(
+
         """
         <style>
         .criterion-card {
@@ -39,29 +90,33 @@ def render_classical_study() -> None:
         st.header("Промпт и контекст")
         st.text_area(
             label="Промпт и контекст",
-            value="",
+            value=st.session_state.get("prompt_context_text", ""),
             height=650,
             key="prompt_context_text",
             label_visibility="collapsed",
             placeholder="Здесь отображается промпт и контекст исследования...",
         )
 
+
     with middle_col:
         st.header("Сгенерированный квест")
         st.text_area(
             label="Сгенерированный квест",
-            value="",
+            value=st.session_state.get("generated_quest_text", ""),
             height=650,
             key="generated_quest_text",
             label_visibility="collapsed",
             placeholder="Здесь отображается сгенерированный квест...",
         )
 
+
     with right_col:
         st.header("Критерии оценки")
         
         if st.button("Далее", use_container_width=True, key="next_button_1"):
-            print(f"User random number: {st.session_state.user_random_number}")
+            if selected_quest_path is not None:
+                handle_next_click(selected_quest_path)
+
 
         for idx, (title, description, scale) in enumerate(CRITERIA, start=1):
             st.markdown(
@@ -85,4 +140,6 @@ def render_classical_study() -> None:
 
         st.markdown("<br>", unsafe_allow_html=True)
         if st.button("Далее", use_container_width=True, key="next_button_2"):
-            print(f"User random number: {st.session_state.user_random_number}")
+            if selected_quest_path is not None:
+                handle_next_click(selected_quest_path)
+

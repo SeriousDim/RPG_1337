@@ -1,15 +1,17 @@
 import random
+from pathlib import Path
 
 import streamlit as st
 
 from view.classical_user_study.render import render_classical_study
-
+from view.classical_user_study.suggest import get_leaf_subfolders, prepare_selection
 
 st.set_page_config(page_title="User Study", layout="wide")
 
-
-if "user_random_number" not in st.session_state:
-    st.session_state.user_random_number = random.randint(1, 1_000_000_000)
+if "selection_indices" not in st.session_state:
+    quests_root = Path(__file__).resolve().parent / "resources" / "quests"
+    leaf_subfolders = get_leaf_subfolders(quests_root)
+    st.session_state.selection_indices = prepare_selection(leaf_subfolders)
 
 
 def main() -> None:
