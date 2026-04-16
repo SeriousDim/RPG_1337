@@ -5,6 +5,7 @@ import streamlit as st
 
 from view.classical_user_study.render import render_classical_study
 from view.classical_user_study.suggest import get_leaf_subfolders, prepare_selection
+from view.instructions import render_instructions
 from view.read import zip_results_dir
 
 
@@ -17,6 +18,9 @@ if "selection_indices" not in st.session_state:
 
 def main() -> None:
     instructions_tab, classical_tab, export_tab = st.tabs(['Инструкция', 'Исследование', 'Выгрузка'])
+
+    with instructions_tab:
+        render_instructions()
 
     with classical_tab:
         render_classical_study()
