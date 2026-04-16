@@ -1,11 +1,29 @@
 from pathlib import Path
 
 import streamlit as st
+import yaml
 
 from view.classical_user_study.criteria import CRITERIA
 from view.classical_user_study.suggest import get_leaf_subfolders
 from view.read import read_prompt_and_generated_quest
 from view.save import save_current_answers
+
+
+def load_quest_data(quest_path: Path) -> dict[str, object]:
+    loaded_data = yaml.safe_load(quest_path.read_text(encoding="utf-8"))
+    return loaded_data if isinstance(loaded_data, dict) else {}
+
+
+def get_quest_section(quest_path: Path) -> dict[str, object]:
+    quest_data = load_quest_data(quest_path).get("quest", {})
+    return quest_data if isinstance(quest_data, dict) else {}
+
+
+def to_yaml_text(value: object) -> str:
+    if value is None:
+        return ""
+    return yaml.safe_dump(value, allow_unicode=True, sort_keys=False, indent=8).rstrip()
+
 
 
 def get_current_answers(quest_path: Path) -> dict[str, object]:
@@ -54,12 +72,22 @@ def render_classical_study() -> None:
         st.toast("Больше квестов нет, спасибо за участие")
         st.session_state["prompt_context_text"] = ""
         st.session_state["generated_quest_text"] = ""
+        st.session_state["quest_objective_text"] = ""
+        st.session_state["quest_reward_text"] = ""
+        st.session_state["quest_parts_resource_to_deliver_text"] = ""
+        st.session_state["quest_explanation_resource_to_deliver_text"] = ""
+        st.session_state["quest_parts_enemy_to_face_text"] = ""
+        st.session_state["quest_explanation_enemy_to_face_text"] = ""
+        st.session_state["quest_parts_destination_text"] = ""
+        st.session_state["quest_explanation_destination_text"] = ""
         return
+
 
     if selection_indices and leaf_subfolders:
         selected_index = selection_indices[current_selection_position]
         selected_quest_path = Path(leaf_subfolders[selected_index]) / "content.yaml"
         prompt_text, generated_quest_text = read_prompt_and_generated_quest(selected_quest_path)
+        quest_data = get_quest_section(selected_quest_path)
 
         last_logged_quest_path = st.session_state.get("last_logged_quest_path")
         if last_logged_quest_path != str(selected_quest_path):
@@ -67,6 +95,28 @@ def render_classical_study() -> None:
             st.session_state["last_logged_quest_path"] = str(selected_quest_path)
             st.session_state["prompt_context_text"] = prompt_text
             st.session_state["generated_quest_text"] = generated_quest_text
+            st.session_state["quest_objective_text"] = str(quest_data.get("objective_description", ""))
+
+            reward_data = quest_data.get("reward", {})
+            st.session_state["quest_reward_text"] = str(reward_data.get("item_name", "")) if isinstance(reward_data, dict) else ""
+
+            parts_data = quest_data.get("parts", {})
+            explanation_data = quest_data.get("explanation", {})
+
+            resource_to_deliver_parts = parts_data.get("resource_to_deliver", {}) if isinstance(parts_data, dict) else {}
+            resource_to_deliver_explanation = explanation_data.get("resource_to_deliver", {}) if isinstance(explanation_data, dict) else {}
+            enemy_to_face_parts = parts_data.get("enemy_to_face", {}) if isinstance(parts_data, dict) else {}
+            enemy_to_face_explanation = explanation_data.get("enemy_to_face", {}) if isinstance(explanation_data, dict) else {}
+            destination_parts = parts_data.get("destination", {}) if isinstance(parts_data, dict) else {}
+            destination_explanation = explanation_data.get("destination", {}) if isinstance(explanation_data, dict) else {}
+
+            st.session_state["quest_parts_resource_to_deliver_text"] = to_yaml_text(resource_to_deliver_parts)
+            st.session_state["quest_explanation_resource_to_deliver_text"] = to_yaml_text(resource_to_deliver_explanation)
+            st.session_state["quest_parts_enemy_to_face_text"] = to_yaml_text(enemy_to_face_parts)
+            st.session_state["quest_explanation_enemy_to_face_text"] = to_yaml_text(enemy_to_face_explanation)
+            st.session_state["quest_parts_destination_text"] = to_yaml_text(destination_parts)
+            st.session_state["quest_explanation_destination_text"] = to_yaml_text(destination_explanation)
+
 
     st.markdown(
         """
@@ -105,7 +155,7 @@ def render_classical_study() -> None:
         st.text_area(
             label="Промпт и контекст",
             value=st.session_state.get("prompt_context_text", ""),
-            height=650,
+            height=2500,
             key="prompt_context_text",
             label_visibility="collapsed",
             placeholder="Здесь отображается промпт и контекст исследования...",
@@ -114,13 +164,60 @@ def render_classical_study() -> None:
     with middle_col:
         st.header("Сгенерированный квест")
         st.text_area(
-            label="Сгенерированный квест",
-            value=st.session_state.get("generated_quest_text", ""),
-            height=650,
-            key="generated_quest_text",
-            label_visibility="collapsed",
-            placeholder="Здесь отображается сгенерированный квест...",
+            label="Цель",
+            value=st.session_state.get("quest_objective_text", ""),
+            height=90,
+            key="quest_objective_text",
         )
+        st.text_area(
+            label="Награда",
+            value=st.session_state.get("quest_reward_text", ""),
+            height=90,
+            key="quest_reward_text",
+        )
+
+        st.markdown("**Получение задания на доставку**")
+        st.text_area(
+            label="Содержание этой части квеста",
+            value=st.session_state.get("quest_parts_resource_to_deliver_text", ""),
+            height=650,
+            key="quest_parts_resource_to_deliver_text",
+        )
+        st.text_area(
+            label="Объяснение нейросети",
+            value=st.session_state.get("quest_explanation_resource_to_deliver_text", ""),
+            height=650,
+            key="quest_explanation_resource_to_deliver_text",
+        )
+
+        st.markdown("**Встреча с противником**")
+        st.text_area(
+            label="Содержание этой части квеста",
+            value=st.session_state.get("quest_parts_enemy_to_face_text", ""),
+            height=650,
+            key="quest_parts_enemy_to_face_text",
+        )
+        st.text_area(
+            label="Объяснение нейросети",
+            value=st.session_state.get("quest_explanation_enemy_to_face_text", ""),
+            height=650,
+            key="quest_explanation_enemy_to_face_text",
+        )
+
+        st.markdown("**Доставка персонажу (завершение квеста)**")
+        st.text_area(
+            label="Содержание этой части квеста",
+            value=st.session_state.get("quest_parts_destination_text", ""),
+            height=650,
+            key="quest_parts_destination_text",
+        )
+        st.text_area(
+            label="Объяснение нейросети",
+            value=st.session_state.get("quest_explanation_destination_text", ""),
+            height=650,
+            key="quest_explanation_destination_text",
+        )
+
 
     with right_col:
         st.header("Критерии оценки")
