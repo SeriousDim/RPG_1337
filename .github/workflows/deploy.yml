@@ -63,7 +63,7 @@ jobs:
             # 3) виртуальное окружение на каждый релиз (просто и надежно)
             python3 -m venv "$RELEASE_DIR/.venv"
             "$RELEASE_DIR/.venv/bin/pip" install --upgrade pip
-            "$RELEASE_DIR/.venv/bin/pip" install -r "$RELEASE_DIR/requirements.txt"
+            "$RELEASE_DIR/.venv/bin/pip" install -r "$RELEASE_DIR/streamlit_requirements.txt"
 
             # 4) переключаем current на новый релиз
             rm -f "$REMOTE_BASE/current"
