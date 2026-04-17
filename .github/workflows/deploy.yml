@@ -20,12 +20,7 @@ jobs:
 
       - name: Create archive
         run: |
-          tar \
-            --exclude=.git \
-            --exclude=.github \
-            --exclude=__pycache__ \
-            --exclude=.venv \
-            -czf app.tar.gz .
+          git ls-files -z | tar --null -T - -czf app.tar.gz
 
       - name: Upload archive to VDS
         uses: appleboy/scp-action@v0.1.7
