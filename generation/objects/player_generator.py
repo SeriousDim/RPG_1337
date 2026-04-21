@@ -42,6 +42,6 @@ class PlayerGenerator:
         )
         
     @staticmethod
-    def create_random_player(level: int) -> Player:
-        raise NotImplementedError()
+    def create_lvl_5_player() -> Player:
+        pass
     
