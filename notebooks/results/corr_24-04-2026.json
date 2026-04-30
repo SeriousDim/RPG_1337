@@ -1,0 +1,209 @@
+{
+    "dialog_criterion": {
+        "spearmanr": {
+            "asymptotic": {
+                "stat": "0.629789",
+                "p_value": "0.000000"
+            },
+            "permutation_test": {
+                "stat": "0.629789",
+                "p_value": "0.000040"
+            }
+        },
+        "kendall": {
+            "asymptotic": {
+                "stat": "0.519495",
+                "p_value": "0.000000"
+            },
+            "permutation_test": {
+                "stat": "0.519495",
+                "p_value": "0.000040"
+            }
+        }
+    },
+    "aggregated_dialog_medians": {
+        "spearmanr": {
+            "asymptotic": {
+                "stat": "0.456722",
+                "p_value": "0.042935"
+            },
+            "permutation_test": {
+                "stat": "0.456722",
+                "p_value": "0.045079"
+            }
+        },
+        "kendall": {
+            "asymptotic": {
+                "stat": "0.393921",
+                "p_value": "0.048579"
+            },
+            "permutation_test": {
+                "stat": "0.393921",
+                "p_value": "0.045519"
+            }
+        }
+    },
+    "criterion": [
+        {
+            "criterion": "relevancy",
+            "spearmanr": {
+                "asymptotic": {
+                    "stat": "0.269834",
+                    "p_value": "0.249924"
+                },
+                "permutation_test": {
+                    "stat": "0.269834",
+                    "p_value": "0.247355"
+                }
+            },
+            "kendall": {
+                "asymptotic": {
+                    "stat": "0.214821",
+                    "p_value": "0.241844"
+                },
+                "permutation_test": {
+                    "stat": "0.214821",
+                    "p_value": "0.256475"
+                }
+            }
+        },
+        {
+            "criterion": "coherence",
+            "spearmanr": {
+                "asymptotic": {
+                    "stat": "0.609022",
+                    "p_value": "0.004371"
+                },
+                "permutation_test": {
+                    "stat": "0.609022",
+                    "p_value": "0.005000"
+                }
+            },
+            "kendall": {
+                "asymptotic": {
+                    "stat": "0.496816",
+                    "p_value": "0.007646"
+                },
+                "permutation_test": {
+                    "stat": "0.496816",
+                    "p_value": "0.005680"
+                }
+            }
+        },
+        {
+            "criterion": "naturalness",
+            "spearmanr": {
+                "asymptotic": {
+                    "stat": "0.437094",
+                    "p_value": "0.053967"
+                },
+                "permutation_test": {
+                    "stat": "0.437094",
+                    "p_value": "0.053799"
+                }
+            },
+            "kendall": {
+                "asymptotic": {
+                    "stat": "0.324361",
+                    "p_value": "0.069652"
+                },
+                "permutation_test": {
+                    "stat": "0.324361",
+                    "p_value": "0.071479"
+                }
+            }
+        },
+        {
+            "criterion": "faithfulness",
+            "spearmanr": {
+                "asymptotic": {
+                    "stat": "0.627316",
+                    "p_value": "0.003070"
+                },
+                "permutation_test": {
+                    "stat": "0.627316",
+                    "p_value": "0.003480"
+                }
+            },
+            "kendall": {
+                "asymptotic": {
+                    "stat": "0.511104",
+                    "p_value": "0.004706"
+                },
+                "permutation_test": {
+                    "stat": "0.511104",
+                    "p_value": "0.003240"
+                }
+            }
+        },
+        {
+            "criterion": "safety",
+            "spearmanr": {
+                "asymptotic": {
+                    "stat": "nan",
+                    "p_value": "nan"
+                },
+                "permutation_test": {
+                    "stat": "nan",
+                    "p_value": "0.000040"
+                }
+            },
+            "kendall": {
+                "asymptotic": {
+                    "stat": "nan",
+                    "p_value": "nan"
+                },
+                "permutation_test": {
+                    "stat": "nan",
+                    "p_value": "0.000040"
+                }
+            }
+        },
+        {
+            "criterion": "unbiasedness",
+            "spearmanr": {
+                "asymptotic": {
+                    "stat": "nan",
+                    "p_value": "nan"
+                },
+                "permutation_test": {
+                    "stat": "nan",
+                    "p_value": "0.000040"
+                }
+            },
+            "kendall": {
+                "asymptotic": {
+                    "stat": "nan",
+                    "p_value": "nan"
+                },
+                "permutation_test": {
+                    "stat": "nan",
+                    "p_value": "0.000040"
+                }
+            }
+        },
+        {
+            "criterion": "non-toxicity",
+            "spearmanr": {
+                "asymptotic": {
+                    "stat": "0.255416",
+                    "p_value": "0.277099"
+                },
+                "permutation_test": {
+                    "stat": "0.255416",
+                    "p_value": "0.276154"
+                }
+            },
+            "kendall": {
+                "asymptotic": {
+                    "stat": "0.239716",
+                    "p_value": "0.209771"
+                },
+                "permutation_test": {
+                    "stat": "0.239716",
+                    "p_value": "0.221796"
+                }
+            }
+        }
+    ]
+}

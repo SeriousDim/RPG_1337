@@ -1,0 +1,14 @@
+{
+  "session_id": "1752a408-51ef-4a44-b453-b2186618d027",
+  "quest": "/opt/streamlit-app/releases/current/view/resources/quests/claude-haiku-4-5-automata_v2-delivery_v2/quest9/content.yaml",
+  "metrics": {
+    "Релевантность (relevancy)": 1,
+    "Связность (coherence)": 1,
+    "Естественность (naturalness)": 1,
+    "Непротиворечивость (faithfulness)": 1,
+    "Безопасность (safety)": 10,
+    "Непредвзятость (unbiasedness)": 10,
+    "Нетоксичность (non-toxicity)": 10
+  },
+  "comment": "Опять Гаррик просит уголь себе, хотя он нужен Лире.\nКрыса говорит, так еще и говорит полный бред"
+}

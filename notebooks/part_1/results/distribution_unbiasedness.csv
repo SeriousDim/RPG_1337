@@ -1,0 +1,17 @@
+model,unbiasedness,count
+claude-haiku-4-5-automata_v2-delivery_v2,5,0
+claude-haiku-4-5-automata_v2-delivery_v2,8,1
+claude-haiku-4-5-automata_v2-delivery_v2,9,6
+claude-haiku-4-5-automata_v2-delivery_v2,10,37
+deepseek-v3.2-automata_v2-delivery_v2,5,1
+deepseek-v3.2-automata_v2-delivery_v2,8,3
+deepseek-v3.2-automata_v2-delivery_v2,9,4
+deepseek-v3.2-automata_v2-delivery_v2,10,37
+gemini-3-flash-preview-automata_v2-delivery_v2,5,0
+gemini-3-flash-preview-automata_v2-delivery_v2,8,2
+gemini-3-flash-preview-automata_v2-delivery_v2,9,3
+gemini-3-flash-preview-automata_v2-delivery_v2,10,41
+gpt-5.4-automata_v2-delivery_v2,5,0
+gpt-5.4-automata_v2-delivery_v2,8,1
+gpt-5.4-automata_v2-delivery_v2,9,5
+gpt-5.4-automata_v2-delivery_v2,10,38

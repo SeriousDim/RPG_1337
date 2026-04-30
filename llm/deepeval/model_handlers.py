@@ -6,10 +6,15 @@ from llm.providers import Provider
 
 
 def create_gpt_model(model_name: str, provider: Provider):
+    if provider.name == "router_ai":
+        base_url = provider.base_url
+    elif provider.name == "proxy_api":
+        base_url = f"{provider.base_url}/openai/v1"
+    
     result = GPTModel(
         model=model_name,
         api_key=provider.api_key,
-        base_url="{provider.base_url}/openai/v1",
+        base_url=base_url,
     )
     
     if model_name == GPT_5_2:
@@ -22,7 +27,7 @@ def create_anthropic_model(model_name: str, provider: Provider):
     return AnthropicModel(
         model=model_name,
         api_key=provider.api_key,
-        base_url="{provider.base_url}/anthropic",
+        base_url=f"{provider.base_url}/anthropic",
     )
 
 
@@ -30,7 +35,7 @@ def create_gemini_model(model_name: str, provider: Provider):
     return GeminiViaHttpLLM(
         model=model_name,
         api_key=provider.api_key,
-        base_url="{provider.base_url}/google",
+        base_url=f"{provider.base_url}/google",
     )
 
 
@@ -38,5 +43,5 @@ def create_open_router_model(model_name: str, provider: Provider):
     return OpenRouterModel(
         model=model_name,
         api_key=provider.api_key,
-        base_url="{provider.base_url}/openrouter/v1",
+        base_url=f"{provider.base_url}/openrouter/v1",
     )

@@ -1,0 +1,5 @@
+model,relevancy,coherence,naturalness,faithfulness,safety,unbiasedness,non-toxicity
+claude-haiku-4-5-automata_v2-delivery_v2,7.091,7.909,7.455,7.091,9.636,9.818,9.364
+deepseek-v3.2-automata_v2-delivery_v2,8.511,8.333,7.778,7.711,9.422,9.667,9.356
+gemini-3-flash-preview-automata_v2-delivery_v2,8.717,8.848,8.37,8.37,9.804,9.848,9.043
+gpt-5.4-automata_v2-delivery_v2,9.0,8.227,7.864,8.659,9.75,9.841,9.045

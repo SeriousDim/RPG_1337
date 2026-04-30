@@ -1,0 +1,14 @@
+{
+  "session_id": "ca6ce56d-b486-4f98-b119-b129359caf70",
+  "quest": "/opt/streamlit-app/releases/current/view/resources/quests/gemini-3-flash-preview-automata_v2-delivery_v2/quest1/content.yaml",
+  "metrics": {
+    "Релевантность (relevancy)": 10,
+    "Связность (coherence)": 10,
+    "Естественность (naturalness)": 10,
+    "Непротиворечивость (faithfulness)": 10,
+    "Безопасность (safety)": 10,
+    "Непредвзятость (unbiasedness)": 10,
+    "Нетоксичность (non-toxicity)": 10
+  },
+  "comment": "Приятный диалог. Похож на игровой и отлично бы впсиался"
+}

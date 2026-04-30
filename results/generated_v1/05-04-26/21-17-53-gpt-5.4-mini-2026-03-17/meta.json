@@ -1,0 +1,48 @@
+{
+    "content": "```yaml\nquest:\n  parts:\n    resource_to_deliver:\n      dialogs:\n        - speaker: \"Травница Марта\"\n          remark: \"Мне нужен свежий Одуванчик из ближайшей поляны. Без него мои настои не закипят вовремя.\"\n        - speaker: \"Травница Марта\"\n          remark: \"Ты как раз подходишь: даже с деревянным мечом можно пройти до места сбора.\"\n        - speaker: \"Травница Марта\"\n          remark: \"Принеси один Одуванчик, и я сразу приготовлю всё для дальнейшего пути.\"\n        - speaker: \"Травница Марта\"\n          remark: \"Одуванчики растут на Одуванчиковой Поляне, путь туда не опасен для новичка.\"\n        - speaker: \"Травница Марта\"\n          remark: \"Возвращайся ко мне с добычей, и я передам её дальше по делу.\"\n      resource: \"Одуванчик\"\n      amount: 1\n\n    enemy_to_face:\n      dialogs:\n        - speaker: \"Гоблин-вор\"\n          remark: \"Ха! Одинокий путник с травой в сумке — лёгкая добыча!\"\n        - speaker: \"Гоблин-вор\"\n          remark: \"Не пройдёшь через тракт просто так, я заберу всё ценное.\"\n        - speaker: \"Гоблин-вор\"\n          remark: \"Твой деревянный меч не внушает страха, но и я не дам тебе уйти без драки.\"\n        - speaker: \"Гоблин-вор\"\n          remark: \"Если хочешь доставить Одуванчик, сначала одолей меня.\"\n      enemy: \"Гоблин-вор\"\n      amount: 1\n\n    destination:\n      dialogs:\n        - speaker: \"Гаррик Кузнец\"\n          remark: \"Отлично, Одуванчик доставлен в срок. Мне как раз не хватало этой травы для работы.\"\n        - speaker: \"Гаррик Кузнец\"\n          remark: \"Для новичка ты справился смело: и путь нашёл, и грабителя не испугался.\"\n        - speaker: \"Гаррик Кузнец\"\n          remark: \"Забирай награду — Деревянный нагрудник пригодится тебе в следующих вылазках.\"\n      character_to_deliver: \"Гаррик Кузнец\"\n\n  objective_description: \"Доставь 1 Одуванчик от Травницы Марты в Королевской столице к Гаррику Кузнецу, по пути пережив встречу с 1 Гоблином-вором.\"\n\n  reward:\n    item_name: \"Деревянный нагрудник\"\n\n  explanation: \"Квест рассчитан на игрока 1 уровня без брони и с деревянным мечом. Для задания выбран доступный ресурс первого ранга — Одуванчик, который можно получить и перенести без требований к более высокому инструменту. В качестве противника выбран Гоблин-вор: он соответствует ранней сложности и посилен при 100 здоровья и оружии с 2 урона. Наградой стал Деревянный нагрудник, так как это предмет ранга 1, логично усиливающий стартового персонажа и не превышающий текущий уровень прогрессии мира.\"\n```",
+    "additional_kwargs": {
+        "refusal": null
+    },
+    "response_metadata": {
+        "token_usage": {
+            "completion_tokens": 727,
+            "prompt_tokens": 9427,
+            "total_tokens": 10154,
+            "completion_tokens_details": {
+                "accepted_prediction_tokens": 0,
+                "audio_tokens": 0,
+                "reasoning_tokens": 0,
+                "rejected_prediction_tokens": 0
+            },
+            "prompt_tokens_details": {
+                "audio_tokens": 0,
+                "cached_tokens": 0
+            }
+        },
+        "model_provider": "openai",
+        "model_name": "gpt-5.4-mini-2026-03-17",
+        "system_fingerprint": null,
+        "id": "chatcmpl-DRKSTEdi1xdT37x7htUBWsU5QfHM6",
+        "service_tier": "default",
+        "finish_reason": "stop",
+        "logprobs": null
+    },
+    "type": "ai",
+    "name": null,
+    "id": "lc_run--019d5e6f-a4a5-73f3-921a-af79a8731a93-0",
+    "tool_calls": [],
+    "invalid_tool_calls": [],
+    "usage_metadata": {
+        "input_tokens": 9427,
+        "output_tokens": 727,
+        "total_tokens": 10154,
+        "input_token_details": {
+            "audio": 0,
+            "cache_read": 0
+        },
+        "output_token_details": {
+            "audio": 0,
+            "reasoning": 0
+        }
+    }
+}

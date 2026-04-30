@@ -1,0 +1,14 @@
+{
+  "session_id": "02ac440d-e140-47df-9f0b-2a13eda43b96",
+  "quest": "/opt/streamlit-app/releases/current/view/resources/quests/gpt-5.4-automata_v2-delivery_v2/quest14/content.yaml",
+  "metrics": {
+    "Релевантность (relevancy)": 9,
+    "Связность (coherence)": 8,
+    "Естественность (naturalness)": 9,
+    "Непротиворечивость (faithfulness)": 9,
+    "Безопасность (safety)": 8,
+    "Непредвзятость (unbiasedness)": 9,
+    "Нетоксичность (non-toxicity)": 8
+  },
+  "comment": ""
+}

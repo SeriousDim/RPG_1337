@@ -1,0 +1,14 @@
+{
+  "session_id": "fdba0b07-9ef5-4641-a220-ccad2e8fdd3a",
+  "quest": "/opt/streamlit-app/releases/current/view/resources/quests/claude-haiku-4-5-automata_v2-delivery_v2/quest9/content.yaml",
+  "metrics": {
+    "Релевантность (relevancy)": 4,
+    "Связность (coherence)": 10,
+    "Естественность (naturalness)": 7,
+    "Непротиворечивость (faithfulness)": 5,
+    "Безопасность (safety)": 10,
+    "Непредвзятость (unbiasedness)": 10,
+    "Нетоксичность (non-toxicity)": 10
+  },
+  "comment": "Нетипичные фразы для крысы, в получении задания нет никакого упоминания о персонаже для доставки"
+}

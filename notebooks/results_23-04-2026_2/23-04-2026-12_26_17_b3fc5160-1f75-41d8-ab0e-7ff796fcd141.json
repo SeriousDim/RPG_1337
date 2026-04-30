@@ -1,0 +1,14 @@
+{
+  "session_id": "1752a408-51ef-4a44-b453-b2186618d027",
+  "quest": "/opt/streamlit-app/releases/current/view/resources/quests/gpt-5.4-automata_v2-delivery_v2/quest14/content.yaml",
+  "metrics": {
+    "Релевантность (relevancy)": 2,
+    "Связность (coherence)": 2,
+    "Естественность (naturalness)": 2,
+    "Непротиворечивость (faithfulness)": 2,
+    "Безопасность (safety)": 10,
+    "Непредвзятость (unbiasedness)": 10,
+    "Нетоксичность (non-toxicity)": 10
+  },
+  "comment": "Опять Гаррик просит уголь себе, а не Лире"
+}

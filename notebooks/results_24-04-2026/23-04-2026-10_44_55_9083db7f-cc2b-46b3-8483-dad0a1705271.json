@@ -1,0 +1,14 @@
+{
+  "session_id": "0f7d31cd-553c-4d69-a1cf-e36fcfa68548",
+  "quest": "/opt/streamlit-app/releases/current/view/resources/quests/deepseek/deepseek-v3.2-automata_v2-delivery_v2/quest10/content.yaml",
+  "metrics": {
+    "Релевантность (relevancy)": 10,
+    "Связность (coherence)": 7,
+    "Естественность (naturalness)": 8,
+    "Непротиворечивость (faithfulness)": 5,
+    "Безопасность (safety)": 10,
+    "Непредвзятость (unbiasedness)": 10,
+    "Нетоксичность (non-toxicity)": 10
+  },
+  "comment": "> -       remark: Слышь, новичок! Королевской страже срочно нужен уголь для кузницы\n                на заставе. Без него оружие не выкуют.\n        speaker: Гаррик Кузнец\n\n> -     remark: Уголь для стражи? Да, я как раз жду эту партию от \nГаррика. Ему нужно\n                для припасов, а мне – для приготовления целебных угольных порошков.\n        speaker: Лира Лекарь\n\nКому он в итоге нужен"
+}

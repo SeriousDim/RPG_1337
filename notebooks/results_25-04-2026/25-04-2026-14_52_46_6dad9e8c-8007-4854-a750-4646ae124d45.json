@@ -1,0 +1,14 @@
+{
+  "session_id": "fdba0b07-9ef5-4641-a220-ccad2e8fdd3a",
+  "quest": "/opt/streamlit-app/releases/current/view/resources/quests/deepseek/deepseek-v3.2-automata_v2-delivery_v2/quest13/content.yaml",
+  "metrics": {
+    "Релевантность (relevancy)": 8,
+    "Связность (coherence)": 7,
+    "Естественность (naturalness)": 6,
+    "Непротиворечивость (faithfulness)": 7,
+    "Безопасность (safety)": 10,
+    "Непредвзятость (unbiasedness)": 10,
+    "Нетоксичность (non-toxicity)": 10
+  },
+  "comment": "Нет реплик игрока, не очень понятный реплики разбойника, противоречие \"доставь мне, а потом скажу как гному\" в промпте и \"доставь их гному\" в квесте"
+}

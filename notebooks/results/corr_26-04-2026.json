@@ -1,0 +1,461 @@
+{
+    "dialog_criterion": {
+        "spearmanr": {
+            "asymptotic": {
+                "stat": "0.634056",
+                "p_value": "0.000000",
+                "ci": {
+                    "ci": [
+                        "0.507444",
+                        "0.728254"
+                    ],
+                    "se": "0.055113"
+                }
+            },
+            "permutation_test": {
+                "stat": "0.634056",
+                "p_value": "0.000040",
+                "ci": {
+                    "ci": [
+                        "0.507444",
+                        "0.728254"
+                    ],
+                    "se": "0.055113"
+                }
+            }
+        },
+        "kendall": {
+            "asymptotic": {
+                "stat": "0.524080",
+                "p_value": "0.000000",
+                "ci": {
+                    "ci": [
+                        "0.418140",
+                        "0.606314"
+                    ],
+                    "se": "0.047383"
+                }
+            },
+            "permutation_test": {
+                "stat": "0.524080",
+                "p_value": "0.000040",
+                "ci": {
+                    "ci": [
+                        "0.418140",
+                        "0.606314"
+                    ],
+                    "se": "0.047383"
+                }
+            }
+        }
+    },
+    "aggregated_dialog_medians": {
+        "spearmanr": {
+            "asymptotic": {
+                "stat": "0.205211",
+                "p_value": "0.385433",
+                "ci": {
+                    "ci": [
+                        "-0.343421",
+                        "0.636983"
+                    ],
+                    "se": "0.248980"
+                }
+            },
+            "permutation_test": {
+                "stat": "0.205211",
+                "p_value": "0.360673",
+                "ci": {
+                    "ci": [
+                        "-0.343421",
+                        "0.636983"
+                    ],
+                    "se": "0.248980"
+                }
+            }
+        },
+        "kendall": {
+            "asymptotic": {
+                "stat": "0.184057",
+                "p_value": "0.371058",
+                "ci": {
+                    "ci": [
+                        "nan",
+                        "nan"
+                    ],
+                    "se": "nan"
+                }
+            },
+            "permutation_test": {
+                "stat": "0.184057",
+                "p_value": "0.365153",
+                "ci": {
+                    "ci": [
+                        "nan",
+                        "nan"
+                    ],
+                    "se": "nan"
+                }
+            }
+        }
+    },
+    "criterion": [
+        {
+            "criterion": "relevancy",
+            "spearmanr": {
+                "asymptotic": {
+                    "stat": "0.279668",
+                    "p_value": "0.232403",
+                    "ci": {
+                        "ci": [
+                            "-0.207547",
+                            "0.649206"
+                        ],
+                        "se": "0.216540"
+                    }
+                },
+                "permutation_test": {
+                    "stat": "0.279668",
+                    "p_value": "0.232475",
+                    "ci": {
+                        "ci": [
+                            "-0.207547",
+                            "0.649206"
+                        ],
+                        "se": "0.216540"
+                    }
+                }
+            },
+            "kendall": {
+                "asymptotic": {
+                    "stat": "0.221331",
+                    "p_value": "0.231710",
+                    "ci": {
+                        "ci": [
+                            "-0.190337",
+                            "0.528114"
+                        ],
+                        "se": "0.179233"
+                    }
+                },
+                "permutation_test": {
+                    "stat": "0.221331",
+                    "p_value": "0.240355",
+                    "ci": {
+                        "ci": [
+                            "-0.190337",
+                            "0.528114"
+                        ],
+                        "se": "0.179233"
+                    }
+                }
+            }
+        },
+        {
+            "criterion": "coherence",
+            "spearmanr": {
+                "asymptotic": {
+                    "stat": "0.444997",
+                    "p_value": "0.049292",
+                    "ci": {
+                        "ci": [
+                            "-0.007272",
+                            "0.756142"
+                        ],
+                        "se": "0.198309"
+                    }
+                },
+                "permutation_test": {
+                    "stat": "0.444997",
+                    "p_value": "0.051679",
+                    "ci": {
+                        "ci": [
+                            "-0.007272",
+                            "0.756142"
+                        ],
+                        "se": "0.198309"
+                    }
+                }
+            },
+            "kendall": {
+                "asymptotic": {
+                    "stat": "0.363803",
+                    "p_value": "0.054356",
+                    "ci": {
+                        "ci": [
+                            "-0.014616",
+                            "0.650541"
+                        ],
+                        "se": "0.168349"
+                    }
+                },
+                "permutation_test": {
+                    "stat": "0.363803",
+                    "p_value": "0.055879",
+                    "ci": {
+                        "ci": [
+                            "-0.014616",
+                            "0.650541"
+                        ],
+                        "se": "0.168349"
+                    }
+                }
+            }
+        },
+        {
+            "criterion": "naturalness",
+            "spearmanr": {
+                "asymptotic": {
+                    "stat": "0.476982",
+                    "p_value": "0.033461",
+                    "ci": {
+                        "ci": [
+                            "0.035303",
+                            "0.735269"
+                        ],
+                        "se": "0.175048"
+                    }
+                },
+                "permutation_test": {
+                    "stat": "0.476982",
+                    "p_value": "0.032239",
+                    "ci": {
+                        "ci": [
+                            "0.035303",
+                            "0.735269"
+                        ],
+                        "se": "0.175048"
+                    }
+                }
+            },
+            "kendall": {
+                "asymptotic": {
+                    "stat": "0.370053",
+                    "p_value": "0.043363",
+                    "ci": {
+                        "ci": [
+                            "0.020425",
+                            "0.598692"
+                        ],
+                        "se": "0.143999"
+                    }
+                },
+                "permutation_test": {
+                    "stat": "0.370053",
+                    "p_value": "0.042359",
+                    "ci": {
+                        "ci": [
+                            "0.020425",
+                            "0.598692"
+                        ],
+                        "se": "0.143999"
+                    }
+                }
+            }
+        },
+        {
+            "criterion": "faithfulness",
+            "spearmanr": {
+                "asymptotic": {
+                    "stat": "0.600248",
+                    "p_value": "0.005140",
+                    "ci": {
+                        "ci": [
+                            "0.164260",
+                            "0.828192"
+                        ],
+                        "se": "0.163222"
+                    }
+                },
+                "permutation_test": {
+                    "stat": "0.600248",
+                    "p_value": "0.006000",
+                    "ci": {
+                        "ci": [
+                            "0.164260",
+                            "0.828192"
+                        ],
+                        "se": "0.163222"
+                    }
+                }
+            },
+            "kendall": {
+                "asymptotic": {
+                    "stat": "0.478564",
+                    "p_value": "0.007784",
+                    "ci": {
+                        "ci": [
+                            "0.129165",
+                            "0.712242"
+                        ],
+                        "se": "0.145123"
+                    }
+                },
+                "permutation_test": {
+                    "stat": "0.478564",
+                    "p_value": "0.006200",
+                    "ci": {
+                        "ci": [
+                            "0.129165",
+                            "0.712242"
+                        ],
+                        "se": "0.145123"
+                    }
+                }
+            }
+        },
+        {
+            "criterion": "safety",
+            "spearmanr": {
+                "asymptotic": {
+                    "stat": "nan",
+                    "p_value": "nan",
+                    "ci": {
+                        "ci": [
+                            "nan",
+                            "nan"
+                        ],
+                        "se": "nan"
+                    }
+                },
+                "permutation_test": {
+                    "stat": "nan",
+                    "p_value": "0.000040",
+                    "ci": {
+                        "ci": [
+                            "nan",
+                            "nan"
+                        ],
+                        "se": "nan"
+                    }
+                }
+            },
+            "kendall": {
+                "asymptotic": {
+                    "stat": "nan",
+                    "p_value": "nan",
+                    "ci": {
+                        "ci": [
+                            "nan",
+                            "nan"
+                        ],
+                        "se": "nan"
+                    }
+                },
+                "permutation_test": {
+                    "stat": "nan",
+                    "p_value": "0.000040",
+                    "ci": {
+                        "ci": [
+                            "nan",
+                            "nan"
+                        ],
+                        "se": "nan"
+                    }
+                }
+            }
+        },
+        {
+            "criterion": "unbiasedness",
+            "spearmanr": {
+                "asymptotic": {
+                    "stat": "nan",
+                    "p_value": "nan",
+                    "ci": {
+                        "ci": [
+                            "nan",
+                            "nan"
+                        ],
+                        "se": "nan"
+                    }
+                },
+                "permutation_test": {
+                    "stat": "nan",
+                    "p_value": "0.000040",
+                    "ci": {
+                        "ci": [
+                            "nan",
+                            "nan"
+                        ],
+                        "se": "nan"
+                    }
+                }
+            },
+            "kendall": {
+                "asymptotic": {
+                    "stat": "nan",
+                    "p_value": "nan",
+                    "ci": {
+                        "ci": [
+                            "nan",
+                            "nan"
+                        ],
+                        "se": "nan"
+                    }
+                },
+                "permutation_test": {
+                    "stat": "nan",
+                    "p_value": "0.000040",
+                    "ci": {
+                        "ci": [
+                            "nan",
+                            "nan"
+                        ],
+                        "se": "nan"
+                    }
+                }
+            }
+        },
+        {
+            "criterion": "non-toxicity",
+            "spearmanr": {
+                "asymptotic": {
+                    "stat": "0.278389",
+                    "p_value": "0.234634",
+                    "ci": {
+                        "ci": [
+                            "nan",
+                            "nan"
+                        ],
+                        "se": "nan"
+                    }
+                },
+                "permutation_test": {
+                    "stat": "0.278389",
+                    "p_value": "0.233315",
+                    "ci": {
+                        "ci": [
+                            "nan",
+                            "nan"
+                        ],
+                        "se": "nan"
+                    }
+                }
+            },
+            "kendall": {
+                "asymptotic": {
+                    "stat": "0.262189",
+                    "p_value": "0.170133",
+                    "ci": {
+                        "ci": [
+                            "-0.278125",
+                            "0.639871"
+                        ],
+                        "se": "0.227678"
+                    }
+                },
+                "permutation_test": {
+                    "stat": "0.262189",
+                    "p_value": "0.181476",
+                    "ci": {
+                        "ci": [
+                            "-0.278125",
+                            "0.639871"
+                        ],
+                        "se": "0.227678"
+                    }
+                }
+            }
+        }
+    ]
+}

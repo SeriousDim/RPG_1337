@@ -1,0 +1,14 @@
+{
+  "session_id": "c9bb0e74-39f5-431d-9304-70caaa8bb553",
+  "quest": "/opt/streamlit-app/releases/current/view/resources/quests/claude-haiku-4-5-automata_v2-delivery_v2/quest4/content.yaml",
+  "metrics": {
+    "Релевантность (relevancy)": 7,
+    "Связность (coherence)": 8,
+    "Естественность (naturalness)": 7,
+    "Непротиворечивость (faithfulness)": 9,
+    "Безопасность (safety)": 10,
+    "Непредвзятость (unbiasedness)": 10,
+    "Нетоксичность (non-toxicity)": 10
+  },
+  "comment": ""
+}

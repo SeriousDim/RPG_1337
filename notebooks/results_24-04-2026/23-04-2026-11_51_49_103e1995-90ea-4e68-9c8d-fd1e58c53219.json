@@ -1,0 +1,14 @@
+{
+  "session_id": "95beafd9-9de6-43fd-90f5-85bfb3afd34f",
+  "quest": "/opt/streamlit-app/releases/current/view/resources/quests/deepseek/deepseek-v3.2-automata_v2-delivery_v2/quest3/content.yaml",
+  "metrics": {
+    "Релевантность (relevancy)": 5,
+    "Связность (coherence)": 5,
+    "Естественность (naturalness)": 5,
+    "Непротиворечивость (faithfulness)": 5,
+    "Безопасность (safety)": 5,
+    "Непредвзятость (unbiasedness)": 5,
+    "Нетоксичность (non-toxicity)": 5
+  },
+  "comment": ""
+}
